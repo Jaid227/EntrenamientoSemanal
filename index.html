@@ -3,7 +3,1700 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>Rutina 6 · Entrenamiento por grupo muscular</title>
+  <title>Modo Entrenamiento · Entrenamiento por gr<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>Mi Rutina · Personalizable</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* ===== VARIABLES DE TEMA ===== */
+    :root {
+      --bg: #f0f4f8;
+      --surface: #ffffff;
+      --surface-alt: #f8fafc;
+      --text: #0f172a;
+      --text-secondary: #64748b;
+      --border: #e2e8f0;
+      --primary: #14b8a6;
+      --primary-hover: #0d9488;
+      --accent: #f59e0b;
+      --danger: #ef4444;
+      --success: #22c55e;
+      --shadow: 0 10px 25px -5px rgba(20, 184, 166, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+      --card-radius: 22px;
+      --transition: 0.25s ease;
+    }
+
+    body.dark {
+      --bg: #0c1222;
+      --surface: #16213a;
+      --surface-alt: #1e2a45;
+      --text: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --border: #2d3a5a;
+      --primary: #2dd4bf;
+      --primary-hover: #5eead4;
+      --accent: #fbbf24;
+      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.6), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      transition: background var(--transition), color var(--transition);
+      line-height: 1.5;
+      padding: 1rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .app-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    /* ===== PANTALLA DE REGISTRO ===== */
+    .welcome-screen {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      overflow-y: auto;
+    }
+
+    .welcome-screen.hidden { display: none; }
+
+    .welcome-card {
+      background: var(--surface);
+      border-radius: var(--card-radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      max-width: 520px;
+      width: 100%;
+      animation: fadeInUp 0.5s ease;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .welcome-card h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--primary);
+    }
+
+    .welcome-card > p {
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+    }
+
+    .form-group { margin-bottom: 1.25rem; }
+
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+      font-size: 0.9rem;
+    }
+
+    .form-group label i { color: var(--primary); margin-right: 0.4rem; }
+
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border-radius: 14px;
+      border: 2px solid var(--border);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 1rem;
+      font-family: inherit;
+      transition: border var(--transition);
+    }
+
+    .form-group input:focus, .form-group select:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .form-help {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin-top: 0.3rem;
+      font-style: italic;
+    }
+
+    .btn-block { width: 100%; justify-content: center; padding: 1rem; font-size: 1rem; }
+
+    /* ===== HEADER ===== */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      background: var(--surface);
+      padding: 1.25rem 1.5rem;
+      border-radius: var(--card-radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .header h1 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--primary);
+    }
+
+    .header-right { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+
+    .user-chip {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--bg);
+      padding: 0.4rem 0.9rem;
+      border-radius: 40px;
+      border: 1px solid var(--border);
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    .user-chip i { color: var(--primary); }
+
+    .theme-toggle {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 40px;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 500;
+      color: var(--text);
+      transition: all var(--transition);
+      font-size: 0.85rem;
+    }
+
+    .theme-toggle:hover {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    /* ===== SALUDO ===== */
+    .greeting-box {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      color: white;
+      padding: 1.5rem;
+      border-radius: var(--card-radius);
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .greeting-box h2 { font-size: 1.25rem; font-weight: 700; }
+    .greeting-box p { font-size: 0.92rem; opacity: 0.95; line-height: 1.5; }
+
+    /* ===== BARRA DE ESTADO ===== */
+    .status-bar {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 1rem;
+      background: var(--surface);
+      padding: 1rem 1.5rem;
+      border-radius: var(--card-radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .date-display {
+      font-weight: 500;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    .date-display i { margin-right: 0.4rem; color: var(--primary); }
+
+    .progress-badge {
+      background: var(--primary);
+      color: white;
+      padding: 0.4rem 1rem;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      white-space: nowrap;
+    }
+
+    /* ===== SELECTOR DE DÍAS ===== */
+    .week-nav {
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+      scrollbar-width: thin;
+    }
+
+    .week-nav::-webkit-scrollbar { height: 5px; }
+    .week-nav::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+
+    .day-btn {
+      flex: 0 0 auto;
+      padding: 0.7rem 1.15rem;
+      border-radius: 60px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      font-weight: 600;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: all var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      white-space: nowrap;
+    }
+
+    .day-btn i { font-size: 0.7rem; }
+    .day-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+    .day-btn.completed { border-left: 4px solid var(--success); }
+    .day-btn:hover:not(.active) { background: var(--border); }
+
+    /* ===== PANEL DE CONTROL (editar / niveles) ===== */
+    .control-panel {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .ctrl-btn {
+      padding: 0.65rem 1.1rem;
+      border-radius: 60px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: inherit;
+    }
+
+    .ctrl-btn:hover { border-color: var(--primary); color: var(--primary); }
+    .ctrl-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+    .ctrl-btn.danger:hover { border-color: var(--danger); color: var(--danger); }
+
+    /* ===== TARJETA DE RUTINA ===== */
+    .routine-card {
+      background: var(--surface);
+      border-radius: var(--card-radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+    }
+
+    .routine-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .routine-title h2 { font-size: 1.4rem; font-weight: 700; margin-bottom: 0.25rem; }
+    .routine-title p { color: var(--text-secondary); font-size: 0.95rem; }
+
+    .routine-meta { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+
+    .meta-item {
+      background: var(--bg);
+      padding: 0.35rem 0.85rem;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+    }
+
+    .block-explanation {
+      background: var(--surface-alt);
+      border-left: 4px solid var(--primary);
+      padding: 1rem 1.25rem;
+      border-radius: 12px;
+      margin-bottom: 1.25rem;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .block-explanation strong { color: var(--text); }
+
+    /* ===== LISTA DE EJERCICIOS ===== */
+    .exercise-list { display: flex; flex-direction: column; gap: 0.85rem; margin-top: 1rem; }
+
+    .exercise-item {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 1rem;
+      align-items: center;
+      background: var(--surface-alt);
+      border-radius: 18px;
+      padding: 1rem 1.15rem;
+      border: 1px solid var(--border);
+      transition: all var(--transition);
+    }
+
+    .exercise-item:hover { border-color: var(--primary); }
+    .exercise-item.editing { border-color: var(--accent); background: rgba(245, 158, 11, 0.06); }
+
+    .exercise-icon {
+      width: 46px;
+      height: 46px;
+      background: var(--surface);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      color: var(--primary);
+      border: 1px solid var(--border);
+    }
+
+    .exercise-info h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.15rem; }
+    .exercise-info p { font-size: 0.82rem; color: var(--text-secondary); }
+
+    .exercise-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.4rem; }
+
+    .tag {
+      background: var(--surface);
+      padding: 0.12rem 0.55rem;
+      border-radius: 40px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    .exercise-action { display: flex; gap: 0.4rem; flex-wrap: wrap; justify-content: flex-end; }
+
+    .btn-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 11px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all var(--transition);
+      font-size: 0.9rem;
+    }
+
+    .btn-icon:hover { background: var(--primary); color: white; border-color: var(--primary); }
+    .btn-icon.primary { background: var(--primary); color: white; border-color: var(--primary); }
+    .btn-icon.primary:hover { background: var(--primary-hover); }
+    .btn-icon.danger:hover { background: var(--danger); border-color: var(--danger); color: white; }
+
+    /* ===== FORMULARIO DE EJERCICIO ===== */
+    .exercise-form {
+      background: var(--surface-alt);
+      border: 2px dashed var(--accent);
+      border-radius: 18px;
+      padding: 1.25rem;
+      margin-top: 1rem;
+      display: none;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .exercise-form.active { display: flex; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+
+    @media (max-width: 540px) { .form-row { grid-template-columns: 1fr; } }
+
+    .form-row.full { grid-template-columns: 1fr; }
+
+    .exercise-form label { font-size: 0.82rem; font-weight: 600; margin-bottom: 0.25rem; display: block; }
+
+    .exercise-form input, .exercise-form select, .exercise-form textarea {
+      width: 100%;
+      padding: 0.65rem 0.85rem;
+      border-radius: 12px;
+      border: 1.5px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      font-size: 0.9rem;
+      font-family: inherit;
+    }
+
+    .exercise-form input:focus, .exercise-form select:focus, .exercise-form textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .form-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+    /* ===== CRONÓMETRO ===== */
+    .timer-panel {
+      background: var(--surface);
+      border-radius: var(--card-radius);
+      box-shadow: var(--shadow);
+      border: 2px solid var(--primary);
+      padding: 1.5rem;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      text-align: center;
+    }
+
+    .timer-panel.active { display: flex; }
+
+    .timer-label { font-size: 1rem; font-weight: 600; color: var(--text-secondary); }
+
+    .timer-explain {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      max-width: 500px;
+      font-style: italic;
+    }
+
+    .timer-display {
+      font-size: 4rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      color: var(--primary);
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+
+    .timer-controls {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 0.5rem;
+    }
+
+    .btn {
+      padding: 0.7rem 1.4rem;
+      border-radius: 60px;
+      border: none;
+      font-weight: 600;
+      font-size: 0.92rem;
+      cursor: pointer;
+      transition: all var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-family: inherit;
+    }
+
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: var(--primary-hover); }
+    .btn-secondary { background: var(--bg); color: var(--text); border: 1px solid var(--border); }
+    .btn-secondary:hover { background: var(--border); }
+    .btn-success { background: var(--success); color: white; }
+    .btn-success:hover { background: #16a34a; }
+    .btn-danger { background: var(--danger); color: white; }
+    .btn-danger:hover { background: #dc2626; }
+
+    /* ===== MODAL DE CONFIRMACIÓN ===== */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.55);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .modal-overlay.active { display: flex; }
+
+    .modal {
+      background: var(--surface);
+      border-radius: var(--card-radius);
+      padding: 1.75rem;
+      max-width: 460px;
+      width: 100%;
+      box-shadow: var(--shadow);
+      animation: fadeInUp 0.3s ease;
+    }
+
+    .modal h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .modal p {
+      color: var(--text-secondary);
+      font-size: 0.92rem;
+      margin-bottom: 1.25rem;
+      line-height: 1.55;
+    }
+
+    .modal-actions { display: flex; gap: 0.6rem; justify-content: flex-end; flex-wrap: wrap; }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      text-align: center;
+      padding: 1.5rem 0.5rem;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      border-top: 1px solid var(--border);
+      margin-top: 2rem;
+    }
+
+    .footer a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color var(--transition);
+    }
+
+    .footer a:hover { color: var(--primary-hover); text-decoration: underline; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 640px) {
+      body { padding: 0.75rem; }
+      .header h1 { font-size: 1.15rem; }
+      .header { padding: 1rem; }
+      .welcome-card { padding: 1.5rem; }
+      .welcome-card h1 { font-size: 1.6rem; }
+      .exercise-item { grid-template-columns: 1fr; text-align: left; gap: 0.65rem; }
+      .exercise-icon { width: 38px; height: 38px; font-size: 1.15rem; }
+      .exercise-action { justify-content: flex-start; }
+      .timer-display { font-size: 3rem; }
+      .status-bar { grid-template-columns: 1fr; text-align: center; }
+      .progress-badge { width: 100%; text-align: center; }
+      .greeting-box h2 { font-size: 1.05rem; }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+    .timer-display.running { animation: pulse 1s infinite; }
+    .hidden { display: none !important; }
+
+    .edit-mode-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: var(--accent);
+      color: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 40px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin-left: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================ -->
+  <!-- PANTALLA DE REGISTRO                         -->
+  <!-- ============================================ -->
+  <div class="welcome-screen" id="welcomeScreen">
+    <div class="welcome-card">
+      <h1><i class="fas fa-sliders-h"></i> Mi Rutina</h1>
+      <p>
+        Bienvenido a tu plan 100% personalizable. Antes de empezar, cuéntame sobre ti.
+        Tus datos se guardan solo en tu dispositivo.
+      </p>
+
+      <div class="form-group">
+        <label for="inputNombre"><i class="fas fa-user"></i> ¿Cómo te llamas?</label>
+        <input type="text" id="inputNombre" placeholder="Escribe tu nombre">
+        <small class="form-help">Así te saludaré cada vez que entrenes.</small>
+      </div>
+
+      <div class="form-group">
+        <label for="inputEdad"><i class="fas fa-birthday-cake"></i> ¿Cuántos años tienes?</label>
+        <input type="number" id="inputEdad" placeholder="Ej. 14" min="10" max="99">
+      </div>
+
+      <div class="form-group">
+        <label for="inputPeso"><i class="fas fa-weight"></i> ¿Cuánto pesas? (kg)</label>
+        <input type="number" id="inputPeso" placeholder="Ej. 48" min="20" max="200" step="0.1">
+      </div>
+
+      <div class="form-group">
+        <label for="inputAltura"><i class="fas fa-ruler-vertical"></i> ¿Cuánto mides? (cm)</label>
+        <input type="number" id="inputAltura" placeholder="Ej. 168" min="100" max="250">
+      </div>
+
+      <div class="form-group">
+        <label for="inputNivel"><i class="fas fa-signal"></i> Elige tu nivel inicial</label>
+        <select id="inputNivel">
+          <option value="principiante">🌱 Principiante</option>
+          <option value="intermedio" selected>⚡ Intermedio</option>
+          <option value="avanzado">🔥 Avanzado</option>
+          <option value="experto">💎 Experto</option>
+        </select>
+        <small class="form-help">Podrás cambiarlo en cualquier momento desde el panel principal.</small>
+      </div>
+
+      <button class="btn btn-primary btn-block" id="btnComenzar">
+        <i class="fas fa-rocket"></i> ¡Comenzar!
+      </button>
+    </div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- APP PRINCIPAL                                -->
+  <!-- ============================================ -->
+  <div class="app-container hidden" id="appContainer">
+    <header class="header">
+      <h1>
+        <i class="fas fa-sliders-h"></i>
+        Mi Rutina
+        <span class="edit-mode-badge hidden" id="editModeBadge">
+          <i class="fas fa-pen"></i> Modo edición
+        </span>
+      </h1>
+      <div class="header-right">
+        <div class="user-chip">
+          <i class="fas fa-user-circle"></i>
+          <span id="userChipName">Usuario</span>
+        </div>
+        <button class="theme-toggle" id="themeToggle">
+          <i class="fas fa-moon" id="themeIcon"></i>
+          <span id="themeText">Modo oscuro</span>
+        </button>
+      </div>
+    </header>
+
+    <section class="greeting-box" id="greetingBox">
+      <h2 id="greetingTitle">¡Hola!</h2>
+      <p id="greetingText">Cargando tu rutina personalizada...</p>
+    </section>
+
+    <div class="status-bar">
+      <div class="date-display" id="dateDisplay">
+        <i class="fas fa-calendar-alt"></i>
+        <span id="currentDate">Cargando fecha...</span>
+      </div>
+      <div class="progress-badge" id="progressBadge">0% completado</div>
+    </div>
+
+    <nav class="week-nav" id="weekNav"></nav>
+
+    <!-- Panel de control -->
+    <div class="control-panel">
+      <button class="ctrl-btn" id="btnEditMode">
+        <i class="fas fa-pen"></i> Editar día
+      </button>
+      <button class="ctrl-btn" id="btnLevels">
+        <i class="fas fa-layer-group"></i> Rutinas por nivel
+      </button>
+      <button class="ctrl-btn danger" id="btnReset">
+        <i class="fas fa-undo"></i> Restaurar semana
+      </button>
+    </div>
+
+    <section class="routine-card" id="routineCard">
+      <div class="routine-header">
+        <div class="routine-title">
+          <h2 id="routineDayTitle">Lunes</h2>
+          <p id="routineFocus">Pierna</p>
+        </div>
+        <div class="routine-meta" id="routineMeta"></div>
+      </div>
+
+      <div class="block-explanation" id="blockExplanation">
+        Aquí te explico qué vas a trabajar hoy.
+      </div>
+
+      <div class="exercise-list" id="exerciseList"></div>
+
+      <!-- Formulario para agregar / editar ejercicio -->
+      <div class="exercise-form" id="exerciseForm">
+        <h3 style="font-size: 1rem; font-weight: 700;" id="formTitle">
+          <i class="fas fa-plus-circle" style="color: var(--accent);"></i> Nuevo ejercicio
+        </h3>
+        <div class="form-row">
+          <div>
+            <label for="fNombre">Nombre del ejercicio</label>
+            <input type="text" id="fNombre" placeholder="Ej. Sentadillas">
+          </div>
+          <div>
+            <label for="fZona">Zona del cuerpo</label>
+            <input type="text" id="fZona" placeholder="Ej. Piernas">
+          </div>
+        </div>
+        <div class="form-row full">
+          <div>
+            <label for="fDescripcion">Descripción / técnica</label>
+            <textarea id="fDescripcion" rows="2" placeholder="Ej. Baja controlado, rodillas alineadas..."></textarea>
+          </div>
+        </div>
+        <div class="form-row">
+          <div>
+            <label for="fSeries">Series</label>
+            <input type="number" id="fSeries" value="3" min="1" max="20">
+          </div>
+          <div>
+            <label for="fTiempo">Tiempo por serie (segundos)</label>
+            <input type="number" id="fTiempo" value="40" min="5" max="3600">
+          </div>
+        </div>
+        <div class="form-row">
+          <div>
+            <label for="fDescanso">Descanso entre series (segundos)</label>
+            <input type="number" id="fDescanso" value="45" min="0" max="600">
+          </div>
+          <div>
+            <label for="fIcono">Ícono (emoji)</label>
+            <input type="text" id="fIcono" value="💪" maxlength="4">
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-primary" id="btnGuardarEjercicio">
+            <i class="fas fa-save"></i> Guardar
+          </button>
+          <button class="btn btn-secondary" id="btnCancelarEdicion">
+            <i class="fas fa-times"></i> Cancelar
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="timer-panel" id="timerPanel">
+      <div class="timer-label" id="timerLabel">Ejercicio activo</div>
+      <div class="timer-display" id="timerDisplay">00:00</div>
+      <div class="timer-explain" id="timerExplain">
+        Respira, mantén la técnica y no te apresures.
+      </div>
+      <div class="timer-controls">
+        <button class="btn btn-secondary" id="pauseBtn"><i class="fas fa-pause"></i> Pausar</button>
+        <button class="btn btn-primary" id="repeatBtn"><i class="fas fa-redo-alt"></i> Repetir</button>
+        <button class="btn btn-success" id="nextBtn"><i class="fas fa-check"></i> Terminar</button>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <a href="https://jaid227.github.io/EntropiaDigital/" target="_blank" rel="noopener noreferrer">
+        → © 2026 Mandrágora Entrópica | Desarrollo Web Estratégico ←
+      </a>
+    </footer>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- MODAL DE CONFIRMACIÓN                        -->
+  <!-- ============================================ -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <h3 id="modalTitle"><i class="fas fa-exclamation-triangle" style="color: var(--accent);"></i> Confirmar</h3>
+      <p id="modalText">¿Estás seguro?</p>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" id="modalCancel"><i class="fas fa-times"></i> Cancelar</button>
+        <button class="btn btn-primary" id="modalConfirm"><i class="fas fa-check"></i> Sí, continuar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ============================================================
+    // 1. BASE DE EJERCICIOS DISPONIBLES (catálogo general)
+    // ============================================================
+    const catalogoEjercicios = {
+      pierna: [
+        { nombre: "Sentadillas", descripcion: "Baja controlado, rodillas alineadas con los pies.", zona: "Cuádriceps y glúteos", series: 4, tiempo: 45, descanso: 60, icono: "🦵" },
+        { nombre: "Zancadas alternas", descripcion: "Paso largo al frente, rodilla trasera cerca del suelo.", zona: "Piernas y glúteos", series: 3, tiempo: 40, descanso: 45, icono: "🚶" },
+        { nombre: "Puente de glúteo", descripcion: "Acostado, eleva la cadera apretando glúteos.", zona: "Glúteos", series: 4, tiempo: 40, descanso: 45, icono: "🍑" },
+        { nombre: "Elevación de gemelos", descripcion: "De pie, sube los talones lentamente.", zona: "Gemelos", series: 4, tiempo: 30, descanso: 30, icono: "🦶" },
+        { nombre: "Sentadilla isométrica", descripcion: "Espalda en la pared, aguanta la posición.", zona: "Cuádriceps", series: 3, tiempo: 30, descanso: 45, icono: "🧱" },
+        { nombre: "Peso muerto a una pierna", descripcion: "Equilibrio sobre una pierna, baja el tronco.", zona: "Isquios y glúteos", series: 3, tiempo: 35, descanso: 45, icono: "⚖️" }
+      ],
+      brazo: [
+        { nombre: "Flexiones diamante", descripcion: "Manos juntas formando un triángulo. Tríceps.", zona: "Tríceps", series: 3, tiempo: 40, descanso: 60, icono: "💎" },
+        { nombre: "Curl con mochila", descripcion: "Mochila con libros. Sube y baja controlado.", zona: "Bíceps", series: 4, tiempo: 40, descanso: 45, icono: "🎒" },
+        { nombre: "Fondos de tríceps en silla", descripcion: "Manos en el borde de una silla, baja y sube.", zona: "Tríceps", series: 3, tiempo: 40, descanso: 50, icono: "🪑" },
+        { nombre: "Curl martillo", descripcion: "Con mochila o botellas. Sube como un martillo.", zona: "Bíceps y antebrazo", series: 3, tiempo: 40, descanso: 45, icono: "🔨" },
+        { nombre: "Flexiones cerradas", descripcion: "Manos juntas al pecho. Trabaja tríceps.", zona: "Tríceps", series: 3, tiempo: 35, descanso: 50, icono: "🤲" }
+      ],
+      espalda: [
+        { nombre: "Remo con mochila", descripcion: "Inclínate, tira la mochila al pecho.", zona: "Dorsales", series: 4, tiempo: 45, descanso: 60, icono: "🎒" },
+        { nombre: "Superman", descripcion: "Boca abajo, eleva brazos y piernas.", zona: "Espalda baja", series: 3, tiempo: 30, descanso: 40, icono: "🦸" },
+        { nombre: "Remo invertido en mesa", descripcion: "Debajo de una mesa, tira tu pecho hacia arriba.", zona: "Espalda y brazos", series: 3, tiempo: 40, descanso: 50, icono: "🪑" },
+        { nombre: "Pájaro (reverse fly)", descripcion: "Con mochila, abre los brazos como alas.", zona: "Trapecios", series: 3, tiempo: 40, descanso: 45, icono: "🦅" },
+        { nombre: "Plancha frontal", descripcion: "Cuerpo recto, abdomen firme.", zona: "Core", series: 3, tiempo: 30, descanso: 45, icono: "🧱" }
+      ],
+      abdomen: [
+        { nombre: "Plancha frontal", descripcion: "Cuerpo recto, abdomen apretado.", zona: "Abdomen", series: 4, tiempo: 40, descanso: 45, icono: "🧱" },
+        { nombre: "Plancha lateral", descripcion: "Apoya antebrazo, cuerpo recto.", zona: "Oblicuos", series: 3, tiempo: 30, descanso: 40, icono: "📐" },
+        { nombre: "Crunch abdominal", descripcion: "Eleva hombros del suelo exhalando.", zona: "Abdomen superior", series: 4, tiempo: 30, descanso: 30, icono: "🔺" },
+        { nombre: "Elevación de piernas", descripcion: "Sube las piernas rectas sin arquear.", zona: "Abdomen inferior", series: 3, tiempo: 30, descanso: 40, icono: "🦵" },
+        { nombre: "Bird-dog", descripcion: "Cuadrupedia, extiende brazo y pierna opuestos.", zona: "Core y espalda", series: 3, tiempo: 30, descanso: 30, icono: "🐦" },
+        { nombre: "Bicicleta abdominal", descripcion: "Codo a rodilla opuesta alternando.", zona: "Oblicuos", series: 4, tiempo: 40, descanso: 40, icono: "🚴" },
+        { nombre: "V-up", descripcion: "Brazos y piernas se juntan formando una V.", zona: "Abdomen completo", series: 3, tiempo: 30, descanso: 45, icono: "✌️" }
+      ],
+      pecho: [
+        { nombre: "Flexiones clásicas", descripcion: "Manos a la altura de los hombros.", zona: "Pectorales", series: 4, tiempo: 40, descanso: 60, icono: "💪" },
+        { nombre: "Flexiones inclinadas", descripcion: "Pies en silla, más difíciles.", zona: "Pecho superior", series: 3, tiempo: 35, descanso: 60, icono: "🪑" },
+        { nombre: "Aperturas con mochila", descripcion: "Acostado, abre los brazos con peso.", zona: "Pectorales", series: 3, tiempo: 40, descanso: 45, icono: "🦋" },
+        { nombre: "Flexiones lentas", descripcion: "Baja en 3 segundos, sube en 1.", zona: "Pecho y tríceps", series: 3, tiempo: 40, descanso: 60, icono: "⏳" }
+      ]
+    };
+
+    // ============================================================
+    // 2. RUTINAS AUTOMÁTICAS POR NIVEL
+    // ============================================================
+    const niveles = {
+      principiante: {
+        nombre: "🌱 Principiante",
+        descripcion: "Ideal para empezar. Menos volumen y tiempos más cortos.",
+        tiempoBase: 0.7, // multiplicador
+        seriesBase: -1,
+        dias: {
+          lunes: { enfoque: "Pierna", ejercicios: ["Sentadillas", "Puente de glúteo", "Elevación de gemelos"] },
+          martes: { enfoque: "Brazo", ejercicios: ["Curl con mochila", "Fondos de tríceps en silla"] },
+          miercoles: { enfoque: "Espalda", ejercicios: ["Superman", "Plancha frontal"] },
+          jueves: { enfoque: "Abdomen", ejercicios: ["Crunch abdominal", "Bird-dog"] },
+          viernes: { enfoque: "Pecho", ejercicios: ["Flexiones clásicas", "Aperturas con mochila"] },
+          sabado: { enfoque: "Abdomen + core", ejercicios: ["Plancha frontal", "Plancha lateral"] },
+          domingo: { enfoque: "Descanso total", ejercicios: [] }
+        }
+      },
+      intermedio: {
+        nombre: "⚡ Intermedio",
+        descripcion: "El equilibrio perfecto entre volumen y recuperación.",
+        tiempoBase: 1.0,
+        seriesBase: 0,
+        dias: {
+          lunes: { enfoque: "Pierna", ejercicios: ["Sentadillas", "Zancadas alternas", "Puente de glúteo", "Elevación de gemelos"] },
+          martes: { enfoque: "Brazo", ejercicios: ["Flexiones diamante", "Curl con mochila", "Fondos de tríceps en silla"] },
+          miercoles: { enfoque: "Espalda", ejercicios: ["Remo con mochila", "Superman", "Plancha frontal"] },
+          jueves: { enfoque: "Abdomen", ejercicios: ["Plancha frontal", "Crunch abdominal", "Elevación de piernas"] },
+          viernes: { enfoque: "Pecho", ejercicios: ["Flexiones clásicas", "Aperturas con mochila", "Flexiones lentas"] },
+          sabado: { enfoque: "Abdomen + core", ejercicios: ["Plancha lateral", "Bicicleta abdominal", "Bird-dog"] },
+          domingo: { enfoque: "Descanso total", ejercicios: [] }
+        }
+      },
+      avanzado: {
+        nombre: "🔥 Avanzado",
+        descripcion: "Más series, más tiempo, más exigencia.",
+        tiempoBase: 1.25,
+        seriesBase: 1,
+        dias: {
+          lunes: { enfoque: "Pierna", ejercicios: ["Sentadillas", "Zancadas alternas", "Puente de glúteo", "Elevación de gemelos", "Peso muerto a una pierna"] },
+          martes: { enfoque: "Brazo", ejercicios: ["Flexiones diamante", "Curl con mochila", "Fondos de tríceps en silla", "Curl martillo"] },
+          miercoles: { enfoque: "Espalda", ejercicios: ["Remo con mochila", "Remo invertido en mesa", "Superman", "Pájaro (reverse fly)", "Plancha frontal"] },
+          jueves: { enfoque: "Abdomen", ejercicios: ["Plancha frontal", "Plancha lateral", "Crunch abdominal", "Elevación de piernas", "Bird-dog"] },
+          viernes: { enfoque: "Pecho", ejercicios: ["Flexiones clásicas", "Flexiones inclinadas", "Aperturas con mochila", "Flexiones lentas"] },
+          sabado: { enfoque: "Abdomen + core", ejercicios: ["Plancha frontal", "Plancha lateral", "Bicicleta abdominal", "V-up", "Bird-dog"] },
+          domingo: { enfoque: "Descanso total", ejercicios: [] }
+        }
+      },
+      experto: {
+        nombre: "💎 Experto",
+        descripcion: "Máxima intensidad. Solo para quienes ya tienen base sólida.",
+        tiempoBase: 1.5,
+        seriesBase: 2,
+        dias: {
+          lunes: { enfoque: "Pierna", ejercicios: ["Sentadillas", "Zancadas alternas", "Puente de glúteo", "Elevación de gemelos", "Sentadilla isométrica", "Peso muerto a una pierna"] },
+          martes: { enfoque: "Brazo", ejercicios: ["Flexiones diamante", "Curl con mochila", "Fondos de tríceps en silla", "Curl martillo", "Flexiones cerradas"] },
+          miercoles: { enfoque: "Espalda", ejercicios: ["Remo con mochila", "Remo invertido en mesa", "Superman", "Pájaro (reverse fly)", "Plancha frontal"] },
+          jueves: { enfoque: "Abdomen", ejercicios: ["Plancha frontal", "Plancha lateral", "Crunch abdominal", "Elevación de piernas", "Bird-dog", "Bicicleta abdominal"] },
+          viernes: { enfoque: "Pecho", ejercicios: ["Flexiones clásicas", "Flexiones inclinadas", "Aperturas con mochila", "Flexiones lentas"] },
+          sabado: { enfoque: "Abdomen + core", ejercicios: ["Plancha frontal", "Plancha lateral", "Bicicleta abdominal", "V-up", "Bird-dog", "Elevación de piernas"] },
+          domingo: { enfoque: "Descanso total", ejercicios: [] }
+        }
+      }
+    };
+
+    // ============================================================
+    // 3. UTILIDADES DE AUDIO (efectos y alarma)
+    // ============================================================
+    const Audio = {
+      ctx: null,
+      init() {
+        if (!this.ctx) {
+          try {
+            this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+          } catch (e) { this.ctx = null; }
+        }
+      },
+      beep(freq = 800, duracion = 0.15, volumen = 0.15) {
+        this.init();
+        if (!this.ctx) return;
+        try {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.frequency.value = freq;
+          gain.gain.value = volumen;
+          osc.start();
+          setTimeout(() => { osc.stop(); }, duracion * 1000);
+        } catch (e) {}
+      },
+      click() { this.beep(600, 0.06, 0.08); },
+      start() { this.beep(880, 0.12, 0.15); setTimeout(() => this.beep(1200, 0.12, 0.15), 130); },
+      pause() { this.beep(400, 0.15, 0.12); },
+      finish() { this.beep(1200, 0.15, 0.18); setTimeout(() => this.beep(1400, 0.2, 0.18), 160); },
+      alarma() {
+        // Alarma de fin de tiempo: 3 pitidos agudos
+        for (let i = 0; i < 3; i++) {
+          setTimeout(() => this.beep(1500, 0.25, 0.25), i * 350);
+        }
+      }
+    };
+
+    // ============================================================
+    // 4. ESTADO GLOBAL Y PERSISTENCIA
+    // ============================================================
+    let usuario = {
+      nombre: localStorage.getItem('miRutina_nombre') || '',
+      edad: localStorage.getItem('miRutina_edad') || '',
+      peso: localStorage.getItem('miRutina_peso') || '',
+      altura: localStorage.getItem('miRutina_altura') || '',
+      nivel: localStorage.getItem('miRutina_nivel') || 'intermedio'
+    };
+
+    // Rutina personalizada guardada (si existe). Si no, se genera desde el nivel.
+    let rutinaSemana = JSON.parse(localStorage.getItem('miRutina_semana') || 'null');
+
+    let estado = {
+      diaActual: "lunes",
+      ejercicioActual: null,
+      timerInterval: null,
+      tiempoRestante: 0,
+      pausado: false,
+      completados: JSON.parse(localStorage.getItem('miRutina_completados') || '{}'),
+      tema: localStorage.getItem('miRutina_tema') || 'light',
+      modoEdicion: false,
+      editandoIndex: null // null = nuevo, número = editando existente
+    };
+
+    const diasSemana = ["lunes", "martes", "miercoles", "jueves", "viernes", "sabado", "domingo"];
+    const nombresDias = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
+
+    // ============================================================
+    // 5. GENERACIÓN DE RUTINA DESDE NIVEL
+    // ============================================================
+    function generarRutinaDesdeNivel(nivelKey) {
+      const nivel = niveles[nivelKey];
+      const rutina = {};
+
+      diasSemana.forEach(dia => {
+        const config = nivel.dias[dia];
+        const ejercicios = [];
+
+        if (config.ejercicios.length > 0) {
+          // Calentamiento siempre primero
+          ejercicios.push({
+            nombre: "Calentamiento articular",
+            descripcion: "Círculos de cuello, hombros, muñecas, cadera y tobillos.",
+            zona: "Articulaciones", series: 1, tiempo: 300, descanso: 0, icono: "🔄"
+          });
+
+          // Ejercicios del nivel
+          config.ejercicios.forEach(nombreEj => {
+            // Buscar en el catálogo
+            let encontrado = null;
+            Object.values(catalogoEjercicios).forEach(lista => {
+              lista.forEach(ej => { if (ej.nombre === nombreEj) encontrado = ej; });
+            });
+            if (encontrado) {
+              // Aplicar multiplicadores del nivel
+              const seriesAjustadas = Math.max(1, encontrado.series + nivel.seriesBase);
+              const tiempoAjustado = Math.round(encontrado.tiempo * nivel.tiempoBase);
+              ejercicios.push({
+                ...encontrado,
+                series: seriesAjustadas,
+                tiempo: tiempoAjustado
+              });
+            }
+          });
+
+          // Enfriamiento
+          ejercicios.push({
+            nombre: "Enfriamiento + estiramiento",
+            descripcion: "Estira los músculos trabajados. Respira profundo.",
+            zona: "Todo el cuerpo", series: 1, tiempo: 300, descanso: 0, icono: "❄️"
+          });
+
+          // Meditación
+          ejercicios.push({
+            nombre: "Meditación final",
+            descripcion: "Respiración consciente. Relaja cuerpo y mente.",
+            zona: "Mente", series: 1, tiempo: 300, descanso: 0, icono: "🧠"
+          });
+        } else {
+          // Día de descanso
+          ejercicios.push({
+            nombre: "Descanso total",
+            descripcion: "Hoy no se entrena. El descanso es parte del plan.",
+            zona: "Recuperación", series: 1, tiempo: 300, descanso: 0, icono: "💤"
+          });
+        }
+
+        rutina[dia] = {
+          nombre: nombresDias[diasSemana.indexOf(dia)],
+          emoji: obtenerEmojiDia(dia),
+          enfoque: config.enfoque,
+          duracion: Math.round(ejercicios.reduce((s, e) => s + (e.tiempo * e.series + e.descanso * (e.series - 1)), 0) / 60),
+          explicacion: generarExplicacion(dia, config.enfoque),
+          ejercicios: ejercicios
+        };
+      });
+
+      return rutina;
+    }
+
+    function obtenerEmojiDia(dia) {
+      const emojis = { lunes: "🟦", martes: "🟩", miercoles: "🟨", jueves: "🟧", viernes: "🟥", sabado: "🟪", domingo: "⬜" };
+      return emojis[dia] || "⬜";
+    }
+
+    function generarExplicacion(dia, enfoque) {
+      const textos = {
+        "Pierna": "Hoy trabajamos la parte baja del cuerpo. Cuádriceps, isquios, glúteos y gemelos. Calienta bien rodillas y tobillos.",
+        "Brazo": "Hoy le toca a los brazos: bíceps, tríceps y antebrazo. Repeticiones controladas, sin prisa.",
+        "Espalda": "La espalda es la base de una buena postura. Concéntrate en apretar los omóplatos.",
+        "Abdomen": "Hoy trabajamos el centro del cuerpo. Un abdomen fuerte protege tu espalda. Exhala en el esfuerzo.",
+        "Abdomen + core": "Segundo día de core en la semana. Enfócate en la resistencia y la estabilidad.",
+        "Pecho": "El pecho es un músculo grande. Baja controlado y siente el estiramiento.",
+        "Descanso total": "Hoy NO se entrena. Tus músculos crecen cuando descansas. Aprovecha para dormir y comer bien."
+      };
+      return textos[enfoque] || "Sigue las indicaciones de cada ejercicio y respeta tus tiempos.";
+    }
+
+    // ============================================================
+    // 6. INICIALIZACIÓN
+    // ============================================================
+    document.addEventListener('DOMContentLoaded', () => {
+      if (estado.tema === 'dark') {
+        document.body.classList.add('dark');
+        document.getElementById('themeIcon').className = 'fas fa-sun';
+        document.getElementById('themeText').textContent = 'Modo claro';
+      }
+
+      if (usuario.nombre && usuario.edad && usuario.peso && usuario.altura) {
+        iniciarApp();
+      } else {
+        document.getElementById('welcomeScreen').classList.remove('hidden');
+      }
+
+      document.getElementById('btnComenzar').addEventListener('click', registrarUsuario);
+      ['inputNombre', 'inputEdad', 'inputPeso', 'inputAltura'].forEach(id => {
+        document.getElementById(id).addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') registrarUsuario();
+        });
+      });
+
+      document.getElementById('themeToggle').addEventListener('click', toggleTema);
+      document.getElementById('pauseBtn').addEventListener('click', pausarTimer);
+      document.getElementById('repeatBtn').addEventListener('click', repetirEjercicio);
+      document.getElementById('nextBtn').addEventListener('click', terminarEjercicio);
+
+      document.getElementById('btnEditMode').addEventListener('click', toggleEditMode);
+      document.getElementById('btnLevels').addEventListener('click', abrirSelectorNiveles);
+      document.getElementById('btnReset').addEventListener('click', confirmarReset);
+      document.getElementById('btnGuardarEjercicio').addEventListener('click', guardarEjercicio);
+      document.getElementById('btnCancelarEdicion').addEventListener('click', cerrarFormulario);
+
+      document.getElementById('modalCancel').addEventListener('click', cerrarModal);
+      document.getElementById('modalConfirm').addEventListener('click', ejecutarModal);
+    });
+
+    // ============================================================
+    // 7. REGISTRO
+    // ============================================================
+    function registrarUsuario() {
+      const nombre = document.getElementById('inputNombre').value.trim();
+      const edad = document.getElementById('inputEdad').value.trim();
+      const peso = document.getElementById('inputPeso').value.trim();
+      const altura = document.getElementById('inputAltura').value.trim();
+      const nivel = document.getElementById('inputNivel').value;
+
+      if (!nombre || !edad || !peso || !altura) {
+        alert('Por favor, completa todos los campos.');
+        return;
+      }
+      if (isNaN(edad) || isNaN(peso) || isNaN(altura)) {
+        alert('Edad, peso y altura deben ser números.');
+        return;
+      }
+
+      usuario = { nombre, edad, peso, altura, nivel };
+      localStorage.setItem('miRutina_nombre', nombre);
+      localStorage.setItem('miRutina_edad', edad);
+      localStorage.setItem('miRutina_peso', peso);
+      localStorage.setItem('miRutina_altura', altura);
+      localStorage.setItem('miRutina_nivel', nivel);
+
+      // Generar rutina automática según nivel
+      rutinaSemana = generarRutinaDesdeNivel(nivel);
+      localStorage.setItem('miRutina_semana', JSON.stringify(rutinaSemana));
+
+      iniciarApp();
+    }
+
+    function iniciarApp() {
+      document.getElementById('welcomeScreen').classList.add('hidden');
+      document.getElementById('appContainer').classList.remove('hidden');
+
+      // Si no hay rutina guardada, generarla
+      if (!rutinaSemana) {
+        rutinaSemana = generarRutinaDesdeNivel(usuario.nivel);
+        localStorage.setItem('miRutina_semana', JSON.stringify(rutinaSemana));
+      }
+
+      const hoy = new Date();
+      const diaSemana = hoy.getDay();
+      const mapaDias = { 0: "domingo", 1: "lunes", 2: "martes", 3: "miercoles", 4: "jueves", 5: "viernes", 6: "sabado" };
+      estado.diaActual = mapaDias[diaSemana];
+
+      document.getElementById('userChipName').textContent = usuario.nombre;
+
+      actualizarFecha();
+      generarNavegacion();
+      cargarRutina(estado.diaActual);
+      actualizarProgreso();
+      actualizarSaludo();
+    }
+
+    // ============================================================
+    // 8. SALUDO Y FECHA
+    // ============================================================
+    function actualizarSaludo() {
+      const hora = new Date().getHours();
+      let momento = "días";
+      if (hora >= 12 && hora < 19) momento = "tardes";
+      else if (hora >= 19) momento = "noches";
+
+      const data = rutinaSemana[estado.diaActual];
+      const titulo = document.getElementById('greetingTitle');
+      const texto = document.getElementById('greetingText');
+
+      titulo.textContent = `¡Buenas ${momento}, ${usuario.nombre}! 👋`;
+
+      const peso = parseFloat(usuario.peso);
+      const alturaM = parseFloat(usuario.altura) / 100;
+      const imc = (peso / (alturaM * alturaM)).toFixed(1);
+
+      texto.innerHTML = `
+        Tienes <strong>${usuario.edad} años</strong>, mides <strong>${usuario.altura} cm</strong> y pesas <strong>${usuario.peso} kg</strong> (IMC: ${imc}).
+        Nivel actual: <strong>${niveles[usuario.nivel].nombre}</strong>.
+        Hoy es <strong>${data.nombre}</strong> y te toca: <strong>${data.enfoque.toLowerCase()}</strong>.
+      `;
+    }
+
+    function actualizarFecha() {
+      const ahora = new Date();
+      const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      const fechaTexto = ahora.toLocaleDateString('es-ES', opciones);
+      document.getElementById('currentDate').textContent = fechaTexto.charAt(0).toUpperCase() + fechaTexto.slice(1);
+    }
+
+    function actualizarProgreso() {
+      let completados = 0;
+      diasSemana.forEach(dia => { if (estado.completados[dia]) completados++; });
+      const porcentaje = Math.round((completados / 7) * 100);
+      document.getElementById('progressBadge').textContent = `${porcentaje}% completado`;
+    }
+
+    // ============================================================
+    // 9. NAVEGACIÓN
+    // ============================================================
+    function generarNavegacion() {
+      const nav = document.getElementById('weekNav');
+      nav.innerHTML = '';
+      diasSemana.forEach((dia, index) => {
+        const btn = document.createElement('button');
+        btn.className = `day-btn ${dia === estado.diaActual ? 'active' : ''} ${estado.completados[dia] ? 'completed' : ''}`;
+        btn.innerHTML = `<i class="fas fa-circle" style="color: ${obtenerColorDia(dia)}; font-size: 0.6rem;"></i> ${nombresDias[index]}`;
+        btn.addEventListener('click', () => {
+          Audio.click();
+          estado.diaActual = dia;
+          estado.modoEdicion = false;
+          document.getElementById('editModeBadge').classList.add('hidden');
+          document.getElementById('btnEditMode').classList.remove('active');
+          cerrarFormulario();
+          cargarRutina(dia);
+          generarNavegacion();
+          actualizarProgreso();
+          actualizarSaludo();
+        });
+        nav.appendChild(btn);
+      });
+    }
+
+    function obtenerColorDia(dia) {
+      const colores = {
+        lunes: "#14b8a6", martes: "#f59e0b", miercoles: "#06b6d4",
+        jueves: "#8b5cf6", viernes: "#ef4444", sabado: "#22c55e", domingo: "#94a3b8"
+      };
+      return colores[dia] || "#94a3b8";
+    }
+
+    // ============================================================
+    // 10. CARGAR RUTINA
+    // ============================================================
+    function cargarRutina(dia) {
+      const data = rutinaSemana[dia];
+      if (!data) return;
+
+      document.getElementById('routineDayTitle').textContent = `${data.emoji} ${data.nombre}`;
+      document.getElementById('routineFocus').textContent = data.enfoque;
+
+      const explicacion = document.getElementById('blockExplanation');
+      explicacion.innerHTML = `
+        <strong>${usuario.nombre}, esto es lo que vas a hacer hoy:</strong> ${data.explicacion}
+        ${estado.modoEdicion ? '<br><br><em>✏️ Estás en modo edición. Puedes agregar, modificar o eliminar ejercicios.</em>' : ''}
+      `;
+
+      const totalTiempo = data.ejercicios.reduce((s, e) => s + (e.tiempo * e.series + e.descanso * (e.series - 1)), 0);
+      const minutos = Math.round(totalTiempo / 60);
+
+      document.getElementById('routineMeta').innerHTML = `
+        <span class="meta-item"><i class="fas fa-clock"></i> ${minutos} min</span>
+        <span class="meta-item"><i class="fas fa-list"></i> ${data.ejercicios.length} ejercicios</span>
+        <span class="meta-item"><i class="fas fa-fire"></i> ${data.enfoque}</span>
+      `;
+
+      const lista = document.getElementById('exerciseList');
+      lista.innerHTML = '';
+
+      data.ejercicios.forEach((ej, index) => {
+        const item = document.createElement('div');
+        item.className = 'exercise-item' + (estado.modoEdicion ? ' editing' : '');
+        item.innerHTML = `
+          <div class="exercise-icon">${ej.icono}</div>
+          <div class="exercise-info">
+            <h3>${ej.nombre}</h3>
+            <p>${ej.descripcion}</p>
+            <div class="exercise-tags">
+              <span class="tag">${ej.zona}</span>
+              <span class="tag">${ej.series} series</span>
+              <span class="tag">${formatearTiempo(ej.tiempo)}</span>
+              ${ej.descanso > 0 ? `<span class="tag">descanso ${ej.descanso}s</span>` : ''}
+            </div>
+          </div>
+          <div class="exercise-action">
+            ${estado.modoEdicion ? `
+              <button class="btn-icon" onclick="editarEjercicio(${index})" title="Editar">
+                <i class="fas fa-pen"></i>
+              </button>
+              <button class="btn-icon danger" onclick="eliminarEjercicio(${index})" title="Eliminar">
+                <i class="fas fa-trash"></i>
+              </button>
+            ` : `
+              <button class="btn-icon primary" onclick="iniciarEjercicio('${dia}', ${index})" title="Iniciar">
+                <i class="fas fa-play"></i>
+              </button>
+              <button class="btn-icon" onclick="repetirEjercicioDirecto('${dia}', ${index})" title="Repetir">
+                <i class="fas fa-redo-alt"></i>
+              </button>
+            `}
+          </div>
+        `;
+        lista.appendChild(item);
+      });
+
+      // Si está en modo edición, agregar botón "Agregar ejercicio"
+      if (estado.modoEdicion) {
+        const addBtn = document.createElement('button');
+        addBtn.className = 'btn btn-primary';
+        addBtn.style.marginTop = '0.5rem';
+        addBtn.innerHTML = '<i class="fas fa-plus"></i> Agregar ejercicio nuevo';
+        addBtn.addEventListener('click', () => abrirFormulario(null));
+        lista.appendChild(addBtn);
+      }
+    }
+
+    function formatearTiempo(segundos) {
+      const min = Math.floor(segundos / 60);
+      const seg = segundos % 60;
+      return `${min.toString().padStart(2, '0')}:${seg.toString().padStart(2, '0')}`;
+    }
+
+    // ============================================================
+    // 11. MODO EDICIÓN
+    // ============================================================
+    function toggleEditMode() {
+      Audio.click();
+      estado.modoEdicion = !estado.modoEdicion;
+      const badge = document.getElementById('editModeBadge');
+      const btn = document.getElementById('btnEditMode');
+      if (estado.modoEdicion) {
+        badge.classList.remove('hidden');
+        btn.classList.add('active');
+      } else {
+        badge.classList.add('hidden');
+        btn.classList.remove('active');
+        cerrarFormulario();
+      }
+      cargarRutina(estado.diaActual);
+    }
+
+    function abrirFormulario(index) {
+      estado.editandoIndex = index;
+      const form = document.getElementById('exerciseForm');
+      form.classList.add('active');
+
+      const titulo = document.getElementById('formTitle');
+      if (index === null) {
+        titulo.innerHTML = '<i class="fas fa-plus-circle" style="color: var(--accent);"></i> Nuevo ejercicio';
+        document.getElementById('fNombre').value = '';
+        document.getElementById('fZona').value = '';
+        document.getElementById('fDescripcion').value = '';
+        document.getElementById('fSeries').value = 3;
+        document.getElementById('fTiempo').value = 40;
+        document.getElementById('fDescanso').value = 45;
+        document.getElementById('fIcono').value = '💪';
+      } else {
+        titulo.innerHTML = '<i class="fas fa-pen" style="color: var(--accent);"></i> Editar ejercicio';
+        const ej = rutinaSemana[estado.diaActual].ejercicios[index];
+        document.getElementById('fNombre').value = ej.nombre;
+        document.getElementById('fZona').value = ej.zona;
+        document.getElementById('fDescripcion').value = ej.descripcion;
+        document.getElementById('fSeries').value = ej.series;
+        document.getElementById('fTiempo').value = ej.tiempo;
+        document.getElementById('fDescanso').value = ej.descanso;
+        document.getElementById('fIcono').value = ej.icono;
+      }
+      form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function cerrarFormulario() {
+      document.getElementById('exerciseForm').classList.remove('active');
+      estado.editandoIndex = null;
+    }
+
+    function guardarEjercicio() {
+      const nombre = document.getElementById('fNombre').value.trim();
+      const zona = document.getElementById('fZona').value.trim() || "General";
+      const descripcion = document.getElementById('fDescripcion').value.trim() || "Sin descripción.";
+      const series = parseInt(document.getElementById('fSeries').value) || 3;
+      const tiempo = parseInt(document.getElementById('fTiempo').value) || 40;
+      const descanso = parseInt(document.getElementById('fDescanso').value) || 0;
+      const icono = document.getElementById('fIcono').value.trim() || "💪";
+
+      if (!nombre) {
+        alert('El nombre del ejercicio es obligatorio.');
+        return;
+      }
+
+      const nuevoEj = { nombre, zona, descripcion, series, tiempo, descanso, icono };
+      const dia = estado.diaActual;
+
+      if (estado.editandoIndex === null) {
+        // Agregar nuevo
+        rutinaSemana[dia].ejercicios.push(nuevoEj);
+        Audio.start();
+      } else {
+        // Editar existente
+        rutinaSemana[dia].ejercicios[estado.editandoIndex] = nuevoEj;
+        Audio.beep(700, 0.12, 0.15);
+      }
+
+      // Recalcular duración
+      recalcularDuracion(dia);
+      localStorage.setItem('miRutina_semana', JSON.stringify(rutinaSemana));
+
+      cerrarFormulario();
+      cargarRutina(dia);
+    }
+
+    function editarEjercicio(index) {
+      Audio.click();
+      abrirFormulario(index);
+    }
+
+    function eliminarEjercicio(index) {
+      Audio.pause();
+      abrirModal(
+        'Eliminar ejercicio',
+        `¿Seguro que quieres eliminar "<strong>${rutinaSemana[estado.diaActual].ejercicios[index].nombre}</strong>" de este día?`,
+        () => {
+          rutinaSemana[estado.diaActual].ejercicios.splice(index, 1);
+          recalcularDuracion(estado.diaActual);
+          localStorage.setItem('miRutina_semana', JSON.stringify(rutinaSemana));
+          cargarRutina(estado.diaActual);
+          cerrarModal();
+        }
+      );
+    }
+
+    function recalcularDuracion(dia) {
+      const ejercicios = rutinaSemana[dia].ejercicios;
+      const totalSeg = ejercicios.reduce((s, e) => s + (e.tiempo * e.series + e.descanso * Math.max(0, e.series - 1)), 0);
+      rutinaSemana[dia].duracion = Math.round(totalSeg / 60);
+    }
+
+    // ============================================================
+    // 12. SELECTOR DE NIVELES
+    // ============================================================
+    function abrirSelectorNiveles() {
+      Audio.click();
+      const modal = document.getElementById('modalOverlay');
+      const titulo = document.getElementById('modalTitle');
+      const texto = document.getElementById('modalText');
+      const confirm = document.getElementById('modalConfirm');
+
+      titulo.innerHTML = '<i class="fas fa-layer-group" style="color: var(--primary);"></i> Elegir rutina por nivel';
+      texto.innerHTML = `
+        <p style="margin-bottom: 0.85rem;">Selecciona el nivel. <strong>Se reemplazará toda tu semana actual</strong> con la rutina del nivel elegido.</p>
+        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+          ${Object.keys(niveles).map(key => `
+            <button class="ctrl-btn" style="justify-content: flex-start; width: 100%;" onclick="seleccionarNivel('${key}')">
+              <strong>${niveles[key].nombre}</strong> — ${niveles[key].descripcion}
+            </button>
+          `).join('')}
+        </div>
+        <p style="margin-top: 1rem; font-size: 0.8rem; color: var(--text-secondary);">
+          <i class="fas fa-info-circle"></i> Podrás personalizar cada día después.
+        </p>
+      `;
+      confirm.style.display = 'none';
+      modal.classList.add('active');
+    }
+
+    function seleccionarNivel(nivelKey) {
+      Audio.click();
+      cerrarModal();
+      const nivel = niveles[nivelKey];
+      abrirModal(
+        'Confirmar cambio de nivel',
+        `¿Seguro que quieres reemplazar toda tu semana con la rutina <strong>${nivel.nombre}</strong>?<br><br>
+        <em>Se perderán todas las personalizaciones que hayas hecho.</em>`,
+        () => {
+          usuario.nivel = nivelKey;
+          localStorage.setItem('miRutina_nivel', nivelKey);
+          rutinaSemana = generarRutinaDesdeNivel(nivelKey);
+          localStorage.setItem('miRutina_semana', JSON.stringify(rutinaSemana));
+          // Resetear completados porque es una semana nueva
+          estado.completados = {};
+          localStorage.setItem('miRutina_completados', JSON.stringify({}));
+          cargarRutina(estado.diaActual);
+          generarNavegacion();
+          actualizarProgreso();
+          actualizarSaludo();
+          Audio.finish();
+          cerrarModal();
+        }
+      );
+    }
+
+    // ============================================================
+    // 13. RESET TOTAL
+    // ============================================================
+    function confirmarReset() {
+      Audio.click();
+      abrirModal(
+        'Restaurar semana',
+        `Esto reemplazará todos los días con la rutina del nivel <strong>${niveles[usuario.nivel].nombre}</strong>.<br><br>
+        ¿Perderás tus personalizaciones. Continuar?`,
+        () => {
+          rutinaSemana = generarRutinaDesdeNivel(usuario.nivel);
+          localStorage.setItem('miRutina_semana', JSON.stringify(rutinaSemana));
+          cargarRutina(estado.diaActual);
+          Audio.finish();
+          cerrarModal();
+        }
+      );
+    }
+
+    // ============================================================
+    // 14. MODAL GENÉRICO
+    // ============================================================
+    let modalCallback = null;
+
+    function abrirModal(titulo, texto, callback) {
+      document.getElementById('modalTitle').innerHTML = `<i class="fas fa-exclamation-triangle" style="color: var(--accent);"></i> ${titulo}`;
+      document.getElementById('modalText').innerHTML = texto;
+      document.getElementById('modalConfirm').style.display = 'inline-flex';
+      document.getElementById('modalOverlay').classList.add('active');
+      modalCallback = callback;
+    }
+
+    function cerrarModal() {
+      document.getElementById('modalOverlay').classList.remove('active');
+      modalCallback = null;
+    }
+
+    function ejecutarModal() {
+      if (modalCallback) modalCallback();
+    }
+
+    // ============================================================
+    // 15. CRONÓMETRO CON AUDIO
+    // ============================================================
+    function iniciarEjercicio(dia, index) {
+      const ejercicio = rutinaSemana[dia].ejercicios[index];
+      estado.ejercicioActual = { dia, index, ejercicio };
+      estado.tiempoRestante = ejercicio.tiempo;
+      estado.pausado = false;
+
+      const panel = document.getElementById('timerPanel');
+      panel.classList.add('active');
+      document.getElementById('timerLabel').textContent = `${ejercicio.nombre} · Serie 1 de ${ejercicio.series}`;
+      document.getElementById('timerDisplay').textContent = formatearTiempo(estado.tiempoRestante);
+      document.getElementById('timerDisplay').classList.add('running');
+      document.getElementById('pauseBtn').innerHTML = '<i class="fas fa-pause"></i> Pausar';
+
+      document.getElementById('timerExplain').innerHTML = `
+        ${usuario.nombre}, concéntrate en <strong>${ejercicio.zona.toLowerCase()}</strong>.
+        ${ejercicio.descripcion} Respira profundo y mantén el ritmo.
+      `;
+
+      panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+      Audio.start();
+
+      if (estado.timerInterval) clearInterval(estado.timerInterval);
+      estado.timerInterval = setInterval(() => {
+        if (!estado.pausado && estado.tiempoRestante > 0) {
+          estado.tiempoRestante--;
+          document.getElementById('timerDisplay').textContent = formatearTiempo(estado.tiempoRestante);
+          if (estado.tiempoRestante <= 5) {
+            document.getElementById('timerDisplay').style.color = '#ef4444';
+          } else {
+            document.getElementById('timerDisplay').style.color = 'var(--primary)';
+          }
+          if (estado.tiempoRestante <= 0) {
+            clearInterval(estado.timerInterval);
+            document.getElementById('timerDisplay').classList.remove('running');
+            document.getElementById('timerDisplay').textContent = '¡Listo!';
+            document.getElementById('timerDisplay').style.color = '#22c55e';
+            Audio.alarma();
+          }
+        }
+      }, 1000);
+    }
+
+    function pausarTimer() {
+      estado.pausado = !estado.pausado;
+      const btn = document.getElementById('pauseBtn');
+      if (estado.pausado) {
+        btn.innerHTML = '<i class="fas fa-play"></i> Reanudar';
+        document.getElementById('timerDisplay').classList.remove('running');
+        Audio.pause();
+      } else {
+        btn.innerHTML = '<i class="fas fa-pause"></i> Pausar';
+        document.getElementById('timerDisplay').classList.add('running');
+        Audio.beep(700, 0.1, 0.12);
+      }
+    }
+
+    function repetirEjercicio() {
+      if (!estado.ejercicioActual) return;
+      Audio.click();
+      const { dia, index } = estado.ejercicioActual;
+      iniciarEjercicio(dia, index);
+    }
+
+    function repetirEjercicioDirecto(dia, index) {
+      Audio.click();
+      iniciarEjercicio(dia, index);
+    }
+
+    function terminarEjercicio() {
+      if (estado.timerInterval) clearInterval(estado.timerInterval);
+      estado.timerInterval = null;
+      estado.pausado = false;
+      estado.tiempoRestante = 0;
+      document.getElementById('timerDisplay').textContent = '00:00';
+      document.getElementById('timerDisplay').classList.remove('running');
+      document.getElementById('timerDisplay').style.color = 'var(--primary)';
+      document.getElementById('timerPanel').classList.remove('active');
+
+      if (estado.ejercicioActual) {
+        const { dia } = estado.ejercicioActual;
+        estado.completados[dia] = true;
+        localStorage.setItem('miRutina_completados', JSON.stringify(estado.completados));
+        generarNavegacion();
+        actualizarProgreso();
+        Audio.finish();
+
+        const mensajes = [
+          `¡Bien hecho, ${usuario.nombre}! Cada repetición te acerca a tu mejor versión.`,
+          `¡Excelente, ${usuario.nombre}! Tu constancia es tu superpoder.`,
+          `¡Gran trabajo, ${usuario.nombre}! Mañana será aún mejor.`,
+          `¡Así se hace, ${usuario.nombre}! Tu cuerpo te lo agradecerá.`
+        ];
+        const msg = mensajes[Math.floor(Math.random() * mensajes.length)];
+        document.getElementById('greetingText').innerHTML = `<strong>${msg}</strong> Has completado el día ${rutinaSemana[dia].nombre}.`;
+      }
+    }
+
+    // ============================================================
+    // 16. TEMA
+    // ============================================================
+    function toggleTema() {
+      Audio.click();
+      document.body.classList.toggle('dark');
+      const esOscuro = document.body.classList.contains('dark');
+      estado.tema = esOscuro ? 'dark' : 'light';
+      localStorage.setItem('miRutina_tema', estado.tema);
+      document.getElementById('themeIcon').className = esOscuro ? 'fas fa-sun' : 'fas fa-moon';
+      document.getElementById('themeText').textContent = esOscuro ? 'Modo claro' : 'Modo oscuro';
+    }
+
+    // Exponer funciones globales
+    window.iniciarEjercicio = iniciarEjercicio;
+    window.repetirEjercicioDirecto = repetirEjercicioDirecto;
+    window.repetirEjercicio = repetirEjercicio;
+    window.terminarEjercicio = terminarEjercicio;
+    window.pausarTimer = pausarTimer;
+    window.editarEjercicio = editarEjercicio;
+    window.eliminarEjercicio = eliminarEjercicio;
+    window.seleccionarNivel = seleccionarNivel;
+  </script>
+</body>
+</html>upo muscular</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
