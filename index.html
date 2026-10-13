@@ -3,22 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>Modo Entrenamiento · Rutina integral</title>
+  <title>Rutina 6 · Entrenamiento por grupo muscular</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
     /* ===== VARIABLES DE TEMA ===== */
     :root {
-      --bg: #f8fafc;
+      --bg: #f5f7fb;
       --surface: #ffffff;
       --text: #0f172a;
-      --text-secondary: #475569;
+      --text-secondary: #64748b;
       --border: #e2e8f0;
-      --primary: #3b82f6;
-      --primary-hover: #2563eb;
-      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+      --primary: #8b5cf6;
+      --primary-hover: #7c3aed;
+      --accent: #ec4899;
+      --shadow: 0 10px 25px -5px rgba(139, 92, 246, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
       --card-radius: 24px;
       --transition: 0.25s ease;
       --success: #22c55e;
@@ -27,21 +28,18 @@
     }
 
     body.dark {
-      --bg: #0b1120;
-      --surface: #1e293b;
+      --bg: #0a0a1a;
+      --surface: #16162a;
       --text: #f1f5f9;
       --text-secondary: #94a3b8;
-      --border: #334155;
-      --primary: #60a5fa;
-      --primary-hover: #93c5fd;
-      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+      --border: #2d2d4a;
+      --primary: #a78bfa;
+      --primary-hover: #c4b5fd;
+      --accent: #f472b6;
+      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.6), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
@@ -78,9 +76,7 @@
       overflow-y: auto;
     }
 
-    .welcome-screen.hidden {
-      display: none;
-    }
+    .welcome-screen.hidden { display: none; }
 
     .welcome-card {
       background: var(--surface);
@@ -100,15 +96,20 @@
 
     .welcome-card h1 {
       font-size: 2rem;
-      font-weight: 700;
+      font-weight: 800;
       margin-bottom: 0.5rem;
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .welcome-card h1 i {
-      color: var(--primary);
+      -webkit-text-fill-color: var(--primary);
+      background: none;
     }
 
     .welcome-card > p {
@@ -117,9 +118,7 @@
       font-size: 0.95rem;
     }
 
-    .form-group {
-      margin-bottom: 1.25rem;
-    }
+    .form-group { margin-bottom: 1.25rem; }
 
     .form-group label {
       display: block;
@@ -129,10 +128,7 @@
       color: var(--text);
     }
 
-    .form-group label i {
-      color: var(--primary);
-      margin-right: 0.4rem;
-    }
+    .form-group label i { color: var(--primary); margin-right: 0.4rem; }
 
     .form-group input {
       width: 100%;
@@ -146,10 +142,7 @@
       transition: border var(--transition);
     }
 
-    .form-group input:focus {
-      outline: none;
-      border-color: var(--primary);
-    }
+    .form-group input:focus { outline: none; border-color: var(--primary); }
 
     .form-help {
       display: block;
@@ -183,23 +176,20 @@
 
     .header h1 {
       font-size: 1.5rem;
-      font-weight: 700;
+      font-weight: 800;
       letter-spacing: -0.02em;
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    .header h1 i {
-      color: var(--primary);
-    }
+    .header h1 i { -webkit-text-fill-color: var(--primary); background: none; }
 
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      flex-wrap: wrap;
-    }
+    .header-right { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
 
     .user-chip {
       display: flex;
@@ -213,9 +203,7 @@
       font-weight: 500;
     }
 
-    .user-chip i {
-      color: var(--primary);
-    }
+    .user-chip i { color: var(--primary); }
 
     .theme-toggle {
       background: var(--bg);
@@ -240,7 +228,7 @@
 
     /* ===== SALUDO PERSONALIZADO ===== */
     .greeting-box {
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
       color: white;
       padding: 1.5rem;
       border-radius: var(--card-radius);
@@ -250,16 +238,8 @@
       gap: 0.5rem;
     }
 
-    .greeting-box h2 {
-      font-size: 1.3rem;
-      font-weight: 700;
-    }
-
-    .greeting-box p {
-      font-size: 0.95rem;
-      opacity: 0.95;
-      line-height: 1.5;
-    }
+    .greeting-box h2 { font-size: 1.3rem; font-weight: 700; }
+    .greeting-box p { font-size: 0.95rem; opacity: 0.95; line-height: 1.5; }
 
     /* ===== BARRA DE ESTADO ===== */
     .status-bar {
@@ -281,13 +261,10 @@
       font-size: 0.9rem;
     }
 
-    .date-display i {
-      margin-right: 0.4rem;
-      color: var(--primary);
-    }
+    .date-display i { margin-right: 0.4rem; color: var(--primary); }
 
     .progress-badge {
-      background: var(--primary);
+      background: linear-gradient(135deg, var(--primary), var(--accent));
       color: white;
       padding: 0.4rem 1rem;
       border-radius: 40px;
@@ -327,7 +304,11 @@
     }
 
     .day-btn i { font-size: 0.7rem; }
-    .day-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+    .day-btn.active {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: white;
+      border-color: transparent;
+    }
     .day-btn.completed { border-left: 4px solid var(--success); }
     .day-btn:hover:not(.active) { background: var(--border); }
 
@@ -356,16 +337,9 @@
       margin-bottom: 0.25rem;
     }
 
-    .routine-title p {
-      color: var(--text-secondary);
-      font-size: 0.95rem;
-    }
+    .routine-title p { color: var(--text-secondary); font-size: 0.95rem; }
 
-    .routine-meta {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
+    .routine-meta { display: flex; gap: 1rem; flex-wrap: wrap; }
 
     .meta-item {
       background: var(--bg);
@@ -379,7 +353,7 @@
 
     /* ===== EXPLICACIÓN DE BLOQUE ===== */
     .block-explanation {
-      background: var(--bg);
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.08), rgba(236, 72, 153, 0.08));
       border-left: 4px solid var(--primary);
       padding: 1rem 1.25rem;
       border-radius: 12px;
@@ -389,17 +363,10 @@
       line-height: 1.6;
     }
 
-    .block-explanation strong {
-      color: var(--text);
-    }
+    .block-explanation strong { color: var(--text); }
 
     /* ===== LISTA DE EJERCICIOS ===== */
-    .exercise-list {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      margin-top: 1rem;
-    }
+    .exercise-list { display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem; }
 
     .exercise-item {
       display: grid;
@@ -413,10 +380,7 @@
       transition: all var(--transition);
     }
 
-    .exercise-item:hover {
-      border-color: var(--primary);
-      transform: translateY(-2px);
-    }
+    .exercise-item:hover { border-color: var(--primary); transform: translateY(-2px); }
 
     .exercise-icon {
       width: 48px;
@@ -431,23 +395,10 @@
       border: 1px solid var(--border);
     }
 
-    .exercise-info h3 {
-      font-size: 1.05rem;
-      font-weight: 600;
-      margin-bottom: 0.2rem;
-    }
+    .exercise-info h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.2rem; }
+    .exercise-info p { font-size: 0.85rem; color: var(--text-secondary); }
 
-    .exercise-info p {
-      font-size: 0.85rem;
-      color: var(--text-secondary);
-    }
-
-    .exercise-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      margin-top: 0.4rem;
-    }
+    .exercise-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.4rem; }
 
     .tag {
       background: var(--surface);
@@ -461,10 +412,7 @@
       letter-spacing: 0.02em;
     }
 
-    .exercise-action {
-      display: flex;
-      gap: 0.5rem;
-    }
+    .exercise-action { display: flex; gap: 0.5rem; }
 
     .btn-icon {
       width: 40px;
@@ -481,9 +429,19 @@
       font-size: 1rem;
     }
 
-    .btn-icon:hover { background: var(--primary); color: white; border-color: var(--primary); }
-    .btn-icon.primary { background: var(--primary); color: white; border-color: var(--primary); }
-    .btn-icon.primary:hover { background: var(--primary-hover); }
+    .btn-icon:hover {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .btn-icon.primary {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: white;
+      border-color: transparent;
+    }
+
+    .btn-icon.primary:hover { opacity: 0.85; }
 
     /* ===== CRONÓMETRO ===== */
     .timer-panel {
@@ -501,11 +459,7 @@
 
     .timer-panel.active { display: flex; }
 
-    .timer-label {
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--text-secondary);
-    }
+    .timer-label { font-size: 1rem; font-weight: 600; color: var(--text-secondary); }
 
     .timer-explain {
       font-size: 0.85rem;
@@ -545,8 +499,11 @@
       font-family: inherit;
     }
 
-    .btn-primary { background: var(--primary); color: white; }
-    .btn-primary:hover { background: var(--primary-hover); }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: white;
+    }
+    .btn-primary:hover { opacity: 0.9; }
     .btn-secondary { background: var(--bg); color: var(--text); border: 1px solid var(--border); }
     .btn-secondary:hover { background: var(--border); }
     .btn-success { background: var(--success); color: white; }
@@ -602,10 +559,10 @@
   <!-- ============================================ -->
   <div class="welcome-screen" id="welcomeScreen">
     <div class="welcome-card">
-      <h1><i class="fas fa-dumbbell"></i> Fuerza 14</h1>
+      <h1><i class="fas fa-bolt"></i> Rutina 6</h1>
       <p>
-        ¡Hola! Antes de empezar, cuéntame un poco sobre ti. Esto me ayuda a personalizar tu rutina
-        y a hablarte como te mereces. Tus datos se guardan solo en tu dispositivo.
+        Bienvenido a tu plan de entrenamiento por grupo muscular. Antes de empezar, cuéntame
+        un poco sobre ti para personalizar tu experiencia. Tus datos se guardan solo en tu dispositivo.
       </p>
 
       <div class="form-group">
@@ -617,19 +574,19 @@
       <div class="form-group">
         <label for="inputEdad"><i class="fas fa-birthday-cake"></i> ¿Cuántos años tienes?</label>
         <input type="number" id="inputEdad" placeholder="Ej. 14" min="10" max="99">
-        <small class="form-help">La edad me ayuda a ajustar la intensidad de los ejercicios.</small>
+        <small class="form-help">La edad me ayuda a ajustar la intensidad.</small>
       </div>
 
       <div class="form-group">
         <label for="inputPeso"><i class="fas fa-weight"></i> ¿Cuánto pesas? (kg)</label>
         <input type="number" id="inputPeso" placeholder="Ej. 48" min="20" max="200" step="0.1">
-        <small class="form-help">Con tu peso puedo calcular mejor las calorías y la carga.</small>
+        <small class="form-help">Con tu peso calculo mejor las cargas.</small>
       </div>
 
       <div class="form-group">
         <label for="inputAltura"><i class="fas fa-ruler-vertical"></i> ¿Cuánto mides? (cm)</label>
         <input type="number" id="inputAltura" placeholder="Ej. 168" min="100" max="250">
-        <small class="form-help">Tu altura me dice si necesitas más trabajo de movilidad o fuerza.</small>
+        <small class="form-help">Tu altura me dice si necesitas más movilidad o fuerza.</small>
       </div>
 
       <button class="btn btn-primary btn-block" id="btnComenzar">
@@ -642,12 +599,8 @@
   <!-- APP PRINCIPAL                                -->
   <!-- ============================================ -->
   <div class="app-container hidden" id="appContainer">
-    <!-- HEADER -->
     <header class="header">
-      <h1>
-        <i class="fas fa-dumbbell"></i>
-        Fuerza 14
-      </h1>
+      <h1><i class="fas fa-bolt"></i> Rutina 6</h1>
       <div class="header-right">
         <div class="user-chip" id="userChip">
           <i class="fas fa-user-circle"></i>
@@ -660,13 +613,11 @@
       </div>
     </header>
 
-    <!-- SALUDO PERSONALIZADO -->
     <section class="greeting-box" id="greetingBox">
       <h2 id="greetingTitle">¡Hola!</h2>
       <p id="greetingText">Cargando tu rutina personalizada...</p>
     </section>
 
-    <!-- BARRA DE ESTADO -->
     <div class="status-bar">
       <div class="date-display" id="dateDisplay">
         <i class="fas fa-calendar-alt"></i>
@@ -675,20 +626,17 @@
       <div class="progress-badge" id="progressBadge">0% completado</div>
     </div>
 
-    <!-- SELECTOR DE DÍAS -->
     <nav class="week-nav" id="weekNav" aria-label="Seleccionar día de la semana"></nav>
 
-    <!-- TARJETA DE RUTINA -->
     <section class="routine-card" id="routineCard">
       <div class="routine-header">
         <div class="routine-title">
           <h2 id="routineDayTitle">Lunes</h2>
-          <p id="routineFocus">Tren superior + core</p>
+          <p id="routineFocus">Pierna</p>
         </div>
         <div class="routine-meta" id="routineMeta"></div>
       </div>
 
-      <!-- Explicación personalizada del bloque -->
       <div class="block-explanation" id="blockExplanation">
         Aquí te explico qué vas a trabajar hoy.
       </div>
@@ -696,12 +644,11 @@
       <div class="exercise-list" id="exerciseList"></div>
     </section>
 
-    <!-- PANEL DE CRONÓMETRO -->
     <section class="timer-panel" id="timerPanel">
       <div class="timer-label" id="timerLabel">Ejercicio activo</div>
       <div class="timer-display" id="timerDisplay">00:00</div>
       <div class="timer-explain" id="timerExplain">
-        Respira, mantén la técnica y no te apresures. Lo importante es la constancia, no la prisa.
+        Respira, mantén la técnica y no te apresures.
       </div>
       <div class="timer-controls">
         <button class="btn btn-secondary" id="pauseBtn">
@@ -716,7 +663,6 @@
       </div>
     </section>
 
-    <!-- FOOTER -->
     <footer class="footer">
       <a href="https://jaid227.github.io/EntropiaDigital/" target="_blank" rel="noopener noreferrer">
         → © 2026 Mandrágora Entrópica | Desarrollo Web Estratégico ←
@@ -726,96 +672,107 @@
 
   <script>
     // ============================================================
-    // 1. DATOS DE LA RUTINA SEMANAL (con explicaciones por bloque)
+    // 1. DATOS DE LA RUTINA SEMANAL (por grupo muscular)
     // ============================================================
     const rutina = {
       lunes: {
-        nombre: "Lunes", emoji: "🟦", enfoque: "Tren superior + core", duracion: 45,
-        explicacion: "Hoy trabajamos la parte de arriba del cuerpo: pecho, brazos, hombros y abdomen. Es un buen comienzo de semana para activar la fuerza sin cargar demasiado las piernas. Recuerda calentar bien las articulaciones antes de exigirte.",
+        nombre: "Lunes", emoji: "🦵", enfoque: "Pierna", duracion: 50,
+        explicacion: "Hoy es el día más exigente para tus piernas. Vamos a trabajar cuádriceps, isquios, glúteos y gemelos. Como las piernas son músculos grandes, queman muchas calorías y te ayudan a ganar fuerza general. Calienta bien rodillas y tobillos antes de empezar.",
         ejercicios: [
-          { nombre: "Calentamiento articular", descripcion: "Círculos de cuello, hombros, muñecas y tobillos. Movilidad suave.", zona: "Articulaciones", series: 1, tiempo: 300, descanso: 0, icono: "🔄" },
-          { nombre: "Estiramiento dinámico", descripcion: "Brazos al cielo, inclinaciones laterales, rotación de tronco.", zona: "Tronco y hombros", series: 2, tiempo: 90, descanso: 15, icono: "🧘" },
-          { nombre: "Jumping Jacks", descripcion: "Saltos abriendo piernas y brazos. Ritmo constante.", zona: "Todo el cuerpo", series: 3, tiempo: 30, descanso: 30, icono: "🤸" },
-          { nombre: "Flexiones (rodillas apoyadas)", descripcion: "Baja el pecho controlado, codos a 45°. Espalda recta.", zona: "Pecho, tríceps", series: 3, tiempo: 40, descanso: 60, icono: "💪" },
-          { nombre: "Plancha frontal", descripcion: "Cuerpo recto, abdomen contraído. No hundas la cadera.", zona: "Core", series: 3, tiempo: 30, descanso: 45, icono: "🧱" },
-          { nombre: "Sentadillas lentas", descripcion: "Baja en 3 segundos, sube en 1. Rodillas alineadas.", zona: "Piernas", series: 3, tiempo: 45, descanso: 45, icono: "🦵" },
-          { nombre: "Enfriamiento + estiramiento", descripcion: "Estiramiento isquios, pecho y espalda. Respira profundo.", zona: "Todo el cuerpo", series: 1, tiempo: 300, descanso: 0, icono: "❄️" },
-          { nombre: "Meditación 4-7-8", descripcion: "Inhala 4s, retén 7s, exhala 8s. Cierra los ojos.", zona: "Mente", series: 1, tiempo: 300, descanso: 0, icono: "🧠" }
+          { nombre: "Calentamiento articular", descripcion: "Círculos de tobillos, rodillas y cadera. Movilidad suave.", zona: "Articulaciones", series: 1, tiempo: 300, descanso: 0, icono: "🔄" },
+          { nombre: "Estiramiento dinámico de piernas", descripcion: "Balanceo de piernas al frente y atrás, patadas suaves.", zona: "Piernas", series: 2, tiempo: 90, descanso: 15, icono: "🧘" },
+          { nombre: "Sentadillas con peso corporal", descripcion: "Baja controlado hasta donde puedas. Rodillas alineadas con los pies.", zona: "Cuádriceps y glúteos", series: 4, tiempo: 45, descanso: 60, icono: "🦵" },
+          { nombre: "Zancadas alternas", descripcion: "Paso largo al frente, rodilla trasera cerca del suelo.", zona: "Piernas y glúteos", series: 3, tiempo: 40, descanso: 45, icono: "🚶" },
+          { nombre: "Puente de glúteo", descripcion: "Acostado, eleva la cadera apretando glúteos 2 segundos arriba.", zona: "Glúteos e isquios", series: 4, tiempo: 40, descanso: 45, icono: "🍑" },
+          { nombre: "Elevación de gemelos", descripcion: "De pie, sube los talones lentamente. Baja controlado.", zona: "Gemelos", series: 4, tiempo: 30, descanso: 30, icono: "🦶" },
+          { nombre: "Sentadilla isométrica en pared", descripcion: "Espalda en la pared, muslos paralelos al suelo. Aguanta.", zona: "Cuádriceps", series: 3, tiempo: 30, descanso: 45, icono: "🧱" },
+          { nombre: "Enfriamiento + estiramiento", descripcion: "Estira cuádriceps, isquios y gemelos. Respira profundo.", zona: "Piernas", series: 1, tiempo: 300, descanso: 0, icono: "❄️" },
+          { nombre: "Meditación de relajación", descripcion: "Respiración 4-7-8 y visualización de piernas fuertes.", zona: "Mente", series: 1, tiempo: 300, descanso: 0, icono: "🧠" }
         ]
       },
       martes: {
-        nombre: "Martes", emoji: "🟩", enfoque: "Cardio + piernas", duracion: 50,
-        explicacion: "El martes le toca a la parte baja del cuerpo. Vamos a mover las piernas con cardio suave y ejercicios de fuerza. La idea es que sientas el corazón activo pero que puedas hablar mientras te mueves.",
+        nombre: "Martes", emoji: "💪", enfoque: "Brazo", duracion: 45,
+        explicacion: "Hoy le toca a los brazos. Trabajaremos bíceps, tríceps y antebrazo. Recuerda que los brazos se entrenan con repeticiones controladas, no con prisa. Si tienes mancuernas o botellas con agua, úsalas. Si no, tu propio peso es suficiente para empezar.",
         ejercicios: [
-          { nombre: "Calentamiento articular", descripcion: "Tobillos, rodillas y cadera. Movimientos circulares.", zona: "Articulaciones", series: 1, tiempo: 300, descanso: 0, icono: "🔄" },
-          { nombre: "Estiramiento dinámico", descripcion: "Patadas al frente, balanceo de piernas.", zona: "Piernas", series: 2, tiempo: 90, descanso: 15, icono: "🧘" },
-          { nombre: "Trote en el lugar", descripcion: "Intervalos: 1 min rápido, 1 min suave. 5 rondas.", zona: "Cardio", series: 5, tiempo: 60, descanso: 60, icono: "🏃" },
-          { nombre: "Zancadas alternas", descripcion: "Paso largo, rodilla trasera cerca del suelo.", zona: "Piernas y glúteos", series: 3, tiempo: 40, descanso: 45, icono: "🦵" },
-          { nombre: "Puente de glúteo", descripcion: "Acostado, eleva cadera apretando glúteos.", zona: "Glúteos", series: 3, tiempo: 30, descanso: 30, icono: "🍑" },
-          { nombre: "Escaladores", descripcion: "En plancha, lleva rodillas al pecho alternando.", zona: "Core y cardio", series: 3, tiempo: 30, descanso: 45, icono: "⛰️" },
-          { nombre: "Enfriamiento + estiramiento", descripcion: "Estiramiento de cuádriceps, isquios y gemelos.", zona: "Piernas", series: 1, tiempo: 300, descanso: 0, icono: "❄️" },
-          { nombre: "Meditación 4-7-8", descripcion: "Respiración guiada para relajar el cuerpo.", zona: "Mente", series: 1, tiempo: 300, descanso: 0, icono: "🧠" }
+          { nombre: "Calentamiento articular", descripcion: "Círculos de muñeca, codo y hombro.", zona: "Articulaciones", series: 1, tiempo: 300, descanso: 0, icono: "🔄" },
+          { nombre: "Estiramiento dinámico de brazos", descripcion: "Rotaciones de brazos, apertura de pecho.", zona: "Brazos y hombros", series: 2, tiempo: 90, descanso: 15, icono: "🧘" },
+          { nombre: "Flexiones cerradas (diamante)", descripcion: "Manos juntas formando un triángulo. Trabaja tríceps.", zona: "Tríceps", series: 3, tiempo: 40, descanso: 60, icono: "💎" },
+          { nombre: "Curl de bíceps con mochila", descripcion: "Mochila con libros. Sube y baja controlado.", zona: "Bíceps", series: 4, tiempo: 40, descanso: 45, icono: "🎒" },
+          { nombre: "Fondos de tríceps en silla", descripcion: "Manos en el borde de una silla, baja y sube el cuerpo.", zona: "Tríceps", series: 3, tiempo: 40, descanso: 50, icono: "🪑" },
+          { nombre: "Curl martillo", descripcion: "Con mochila o botellas. Sube como si sostuvieras un martillo.", zona: "Bíceps y antebrazo", series: 3, tiempo: 40, descanso: 45, icono: "🔨" },
+          { nombre: "Plancha con toque de hombro", descripcion: "En plancha, toca tu hombro opuesto sin mover la cadera.", zona: "Core y brazos", series: 3, tiempo: 30, descanso: 45, icono: "🧱" },
+          { nombre: "Enfriamiento + estiramiento", descripcion: "Estira bíceps, tríceps y antebrazos.", zona: "Brazos", series: 1, tiempo: 300, descanso: 0, icono: "❄️" },
+          { nombre: "Meditación de gratitud", descripcion: "Respira y agradece a tus brazos por sostenerte cada día.", zona: "Mente", series: 1, tiempo: 300, descanso: 0, icono: "🧠" }
         ]
       },
       miercoles: {
-        nombre: "Miércoles", emoji: "🟨", enfoque: "Movilidad + core (ligero)", duracion: 40,
-        explicacion: "Hoy es un día más tranquilo. Vamos a mover el cuerpo con suavidad, estirar y trabajar el centro (abdomen y espalda baja). Aprovecha para respirar profundo y bajar el estrés de la semana.",
+        nombre: "Miércoles", emoji: "🔙", enfoque: "Espalda", duracion: 45,
+        explicacion: "La espalda es la base de una buena postura. Hoy trabajaremos dorsales, trapecios y espalda baja. Si pasas mucho tiempo sentado, este día te va a ayudar muchísimo. Concéntrate en apretar los omóplatos en cada repetición.",
         ejercicios: [
-          { nombre: "Calentamiento articular", descripcion: "Movilidad suave de todo el cuerpo.", zona: "Articulaciones", series: 1, tiempo: 300, descanso: 0, icono: "🔄" },
-          { nombre: "Yoga básico", descripcion: "Posturas: perro boca abajo, gato-camello, niño.", zona: "Flexibilidad", series: 2, tiempo: 120, descanso: 30, icono: "🧘" },
-          { nombre: "Plancha lateral", descripcion: "Apoya antebrazo, cuerpo recto. Cambia de lado.", zona: "Core lateral", series: 3, tiempo: 20, descanso: 30, icono: "📐" },
-          { nombre: "Bird-dog", descripcion: "En cuadrupedia, extiende brazo y pierna opuestos.", zona: "Core y espalda", series: 3, tiempo: 30, descanso: 30, icono: "🐦" },
-          { nombre: "Enfriamiento + estiramiento", descripcion: "Estiramiento suave de todo el cuerpo.", zona: "Todo", series: 1, tiempo: 300, descanso: 0, icono: "❄️" },
-          { nombre: "Meditación extendida", descripcion: "Respiración consciente + visualización positiva.", zona: "Mente", series: 1, tiempo: 480, descanso: 0, icono: "🧠" }
+          { nombre: "Calentamiento articular", descripcion: "Círculos de hombros, cuello y muñecas.", zona: "Articulaciones", series: 1, tiempo: 300, descanso: 0, icono: "🔄" },
+          { nombre: "Estiramiento dinámico de espalda", descripcion: "Gato-camello, rotaciones de tronco.", zona: "Espalda", series: 2, tiempo: 90, descanso: 15, icono: "🧘" },
+          { nombre: "Remo con mochila", descripcion: "Inclínate al frente, tira la mochila hacia el pecho. Aprieta la espalda.", zona: "Dorsales y trapecios", series: 4, tiempo: 45, descanso: 60, icono: "🎒" },
+          { nombre: "Superman", descripcion: "Boca abajo, eleva brazos y piernas al mismo tiempo. Aguanta 2 segundos.", zona: "Espalda baja", series: 3, tiempo: 30, descanso: 40, icono: "🦸" },
+          { nombre: "Remo invertido en mesa", descripcion: "Debajo de una mesa firme, tira tu pecho hacia arriba.", zona: "Espalda y brazos", series: 3, tiempo: 40, descanso: 50, icono: "🪑" },
+          { nombre: "Pájaro (reverse fly)", descripcion: "Con mochila o botellas, abre los brazos como alas.", zona: "Trapecios y hombros", series: 3, tiempo: 40, descanso: 45, icono: "🦅" },
+          { nombre: "Plancha frontal", descripcion: "Cuerpo recto, abdomen firme. No hundas la cadera.", zona: "Core", series: 3, tiempo: 30, descanso: 45, icono: "🧱" },
+          { nombre: "Enfriamiento + estiramiento", descripcion: "Estira espalda alta, baja y dorsales.", zona: "Espalda", series: 1, tiempo: 300, descanso: 0, icono: "❄️" },
+          { nombre: "Meditación postural", descripcion: "Visualiza tu columna alineada. Respira profundo.", zona: "Mente", series: 1, tiempo: 300, descanso: 0, icono: "🧠" }
         ]
       },
       jueves: {
-        nombre: "Jueves", emoji: "🟧", enfoque: "Tren superior + espalda", duracion: 45,
-        explicacion: "Volvemos a la parte superior, pero esta vez con más atención en la espalda. Una espalda fuerte te ayuda a tener mejor postura y a prevenir dolores por estar sentado. Concéntrate en apretar los músculos de la espalda en cada repetición.",
+        nombre: "Jueves", emoji: "🔥", enfoque: "Abdomen", duracion: 40,
+        explicacion: "Hoy trabajamos el centro del cuerpo. Un abdomen fuerte no solo se ve bien, también protege tu espalda y mejora tu postura. Recuerda: el abdomen no se entrena solo con abdominales, sino con ejercicios de core completos. Respira exhalando en el esfuerzo.",
         ejercicios: [
-          { nombre: "Calentamiento articular", descripcion: "Hombros, codos, muñecas y cuello.", zona: "Articulaciones", series: 1, tiempo: 300, descanso: 0, icono: "🔄" },
-          { nombre: "Estiramiento dinámico", descripcion: "Rotaciones de brazos, apertura de pecho.", zona: "Hombros", series: 2, tiempo: 90, descanso: 15, icono: "🧘" },
-          { nombre: "Flexiones", descripcion: "Variante completa si puedes. Si no, rodillas apoyadas.", zona: "Pecho, tríceps", series: 3, tiempo: 40, descanso: 60, icono: "💪" },
-          { nombre: "Remo con mochila", descripcion: "Mochila con libros. Inclínate y tira hacia el pecho.", zona: "Espalda", series: 3, tiempo: 40, descanso: 45, icono: "🎒" },
-          { nombre: "Superman", descripcion: "Boca abajo, eleva brazos y piernas al mismo tiempo.", zona: "Espalda baja", series: 3, tiempo: 30, descanso: 30, icono: "🦸" },
-          { nombre: "Plancha frontal", descripcion: "Mantén la posición con abdomen firme.", zona: "Core", series: 3, tiempo: 30, descanso: 45, icono: "🧱" },
-          { nombre: "Enfriamiento + estiramiento", descripcion: "Estiramiento de espalda, pecho y hombros.", zona: "Todo", series: 1, tiempo: 300, descanso: 0, icono: "❄️" },
-          { nombre: "Meditación 4-7-8", descripcion: "Respiración relajante para cerrar el día.", zona: "Mente", series: 1, tiempo: 300, descanso: 0, icono: "🧠" }
+          { nombre: "Calentamiento articular", descripcion: "Movilidad de cadera, columna y cuello.", zona: "Articulaciones", series: 1, tiempo: 300, descanso: 0, icono: "🔄" },
+          { nombre: "Estiramiento dinámico", descripcion: "Rotaciones de tronco, inclinaciones laterales.", zona: "Core", series: 2, tiempo: 90, descanso: 15, icono: "🧘" },
+          { nombre: "Plancha frontal", descripcion: "El ejercicio rey del core. Cuerpo recto, abdomen apretado.", zona: "Abdomen", series: 4, tiempo: 40, descanso: 45, icono: "🧱" },
+          { nombre: "Plancha lateral", descripcion: "Apoya antebrazo, cuerpo recto. Cambia de lado.", zona: "Oblicuos", series: 3, tiempo: 30, descanso: 40, icono: "📐" },
+          { nombre: "Crunch abdominal", descripcion: "Acostado, eleva hombros del suelo exhalando.", zona: "Abdomen superior", series: 4, tiempo: 30, descanso: 30, icono: "🔺" },
+          { nombre: "Elevación de piernas", descripcion: "Acostado, sube las piernas rectas sin arquear la espalda.", zona: "Abdomen inferior", series: 3, tiempo: 30, descanso: 40, icono: "🦵" },
+          { nombre: "Bird-dog", descripcion: "En cuadrupedia, extiende brazo y pierna opuestos.", zona: "Core y espalda", series: 3, tiempo: 30, descanso: 30, icono: "🐦" },
+          { nombre: "Enfriamiento + estiramiento", descripcion: "Estira abdomen, oblicuos y espalda baja.", zona: "Core", series: 1, tiempo: 300, descanso: 0, icono: "❄️" },
+          { nombre: "Meditación de respiración", descripcion: "Respira profundo sintiendo cómo se expande tu abdomen.", zona: "Mente", series: 1, tiempo: 300, descanso: 0, icono: "🧠" }
         ]
       },
       viernes: {
-        nombre: "Viernes", emoji: "🟥", enfoque: "Full body", duracion: 50,
-        explicacion: "¡Viernes de cuerpo completo! Hoy combinamos todo lo que has aprendido durante la semana en un circuito. La idea es que sientas el esfuerzo pero sin llegar al agotamiento. Tú marcas el ritmo.",
+        nombre: "Viernes", emoji: "🫀", enfoque: "Pecho", duracion: 45,
+        explicacion: "El pecho es un músculo grande y muy visible. Hoy trabajaremos pectorales, y de paso hombros y tríceps. La clave es la técnica: baja controlado y siente el estiramiento. Si las flexiones completas son muy difíciles, apoya las rodillas sin vergüenza. Lo importante es progresar.",
         ejercicios: [
-          { nombre: "Calentamiento articular", descripcion: "Movilidad general de articulaciones.", zona: "Articulaciones", series: 1, tiempo: 300, descanso: 0, icono: "🔄" },
-          { nombre: "Estiramiento dinámico", descripcion: "Movimientos amplios de brazos y piernas.", zona: "Todo", series: 2, tiempo: 90, descanso: 15, icono: "🧘" },
-          { nombre: "Circuito full body", descripcion: "Sentadilla + flexión + plancha + jumping jacks. 4 rondas.", zona: "Todo el cuerpo", series: 4, tiempo: 60, descanso: 60, icono: "🔁" },
-          { nombre: "Sentadilla con salto", descripcion: "Baja y salta explosivamente. Aterriza suave.", zona: "Piernas y potencia", series: 3, tiempo: 30, descanso: 45, icono: "🦵" },
-          { nombre: "Flexiones", descripcion: "Mantén el core firme, codos a 45°.", zona: "Pecho y tríceps", series: 3, tiempo: 40, descanso: 60, icono: "💪" },
-          { nombre: "Plancha frontal", descripcion: "Cuerpo alineado, sin hundir cadera.", zona: "Core", series: 3, tiempo: 40, descanso: 45, icono: "🧱" },
-          { nombre: "Enfriamiento + estiramiento", descripcion: "Estiramiento completo de cuerpo.", zona: "Todo", series: 1, tiempo: 300, descanso: 0, icono: "❄️" },
-          { nombre: "Meditación 4-7-8", descripcion: "Respiración profunda y gratitud.", zona: "Mente", series: 1, tiempo: 300, descanso: 0, icono: "🧠" }
+          { nombre: "Calentamiento articular", descripcion: "Círculos de hombros, codos y muñecas.", zona: "Articulaciones", series: 1, tiempo: 300, descanso: 0, icono: "🔄" },
+          { nombre: "Estiramiento dinámico de pecho", descripcion: "Apertura de brazos, rotaciones de hombro.", zona: "Pecho y hombros", series: 2, tiempo: 90, descanso: 15, icono: "🧘" },
+          { nombre: "Flexiones clásicas", descripcion: "Manos a la altura de los hombros. Baja el pecho controlado.", zona: "Pectorales", series: 4, tiempo: 40, descanso: 60, icono: "💪" },
+          { nombre: "Flexiones inclinadas (pies en silla)", descripcion: "Más difíciles. Trabajan pecho superior y hombros.", zona: "Pecho superior", series: 3, tiempo: 35, descanso: 60, icono: "🪑" },
+          { nombre: "Aperturas con mochila", descripcion: "Acostado, abre los brazos con peso en las manos.", zona: "Pectorales", series: 3, tiempo: 40, descanso: 45, icono: "🦋" },
+          { nombre: "Flexiones lentas (3 seg bajada)", descripcion: "Baja en 3 segundos, sube en 1. Aumenta la intensidad.", zona: "Pecho y tríceps", series: 3, tiempo: 40, descanso: 60, icono: "⏳" },
+          { nombre: "Plancha con palmada de hombro", descripcion: "En plancha, toca tu hombro opuesto. Mantén el core firme.", zona: "Core y pecho", series: 3, tiempo: 30, descanso: 45, icono: "🧱" },
+          { nombre: "Enfriamiento + estiramiento", descripcion: "Estira pecho, hombros y tríceps.", zona: "Pecho", series: 1, tiempo: 300, descanso: 0, icono: "❄️" },
+          { nombre: "Meditación de cierre", descripcion: "Respira y agradece por tu cuerpo. Visualiza tu progreso.", zona: "Mente", series: 1, tiempo: 300, descanso: 0, icono: "🧠" }
         ]
       },
       sabado: {
-        nombre: "Sábado", emoji: "🟪", enfoque: "Cardio largo + juego", duracion: 55,
-        explicacion: "El sábado es para disfrutar. Sal a caminar, anda en bici o juega algo con amigos. El movimiento libre también entrena. Hoy no hay prisa, solo goza el aire libre y mueve el cuerpo con una sonrisa.",
+        nombre: "Sábado", emoji: "⚡", enfoque: "Abdomen + core", duracion: 45,
+        explicacion: "Segundo día de abdomen en la semana. Esta vez con más énfasis en la resistencia del core. La idea es que sientas cómo tu centro se vuelve más fuerte y estable. Recuerda: sin prisa, exhalando en cada esfuerzo. Si algo te duele (no arde), detente.",
         ejercicios: [
-          { nombre: "Calentamiento articular", descripcion: "Movilidad suave de tobillos y rodillas.", zona: "Articulaciones", series: 1, tiempo: 300, descanso: 0, icono: "🔄" },
-          { nombre: "Caminata o bicicleta", descripcion: "20-30 min a ritmo cómodo. Disfruta el aire libre.", zona: "Cardio", series: 1, tiempo: 1500, descanso: 0, icono: "🚴" },
-          { nombre: "Juego activo", descripcion: "Fútbol, básquet o baile. 15 min de movimiento libre.", zona: "Todo el cuerpo", series: 1, tiempo: 900, descanso: 0, icono: "⚽" },
-          { nombre: "Estiramiento completo", descripcion: "Estira cada grupo muscular 20-30 segundos.", zona: "Todo", series: 1, tiempo: 300, descanso: 0, icono: "🧘" },
-          { nombre: "Meditación", descripcion: "Respiración consciente + reflexión de la semana.", zona: "Mente", series: 1, tiempo: 300, descanso: 0, icono: "🧠" }
+          { nombre: "Calentamiento articular", descripcion: "Movilidad de columna, cadera y cuello.", zona: "Articulaciones", series: 1, tiempo: 300, descanso: 0, icono: "🔄" },
+          { nombre: "Estiramiento dinámico de core", descripcion: "Rotaciones de tronco, inclinaciones, gato-camello.", zona: "Core", series: 2, tiempo: 90, descanso: 15, icono: "🧘" },
+          { nombre: "Plancha frontal con elevación de pierna", descripcion: "En plancha, eleva una pierna 2 segundos. Alterna.", zona: "Abdomen profundo", series: 4, tiempo: 40, descanso: 45, icono: "🧱" },
+          { nombre: "Bicicleta abdominal", descripcion: "Acostado, lleva codo a rodilla opuesta alternando.", zona: "Oblicuos", series: 4, tiempo: 40, descanso: 40, icono: "🚴" },
+          { nombre: "Plancha lateral con elevación", descripcion: "En plancha lateral, eleva la cadera y baja controlado.", zona: "Oblicuos", series: 3, tiempo: 30, descanso: 40, icono: "📐" },
+          { nombre: "V-up", descripcion: "Acostado, sube brazos y piernas al mismo tiempo formando una V.", zona: "Abdomen completo", series: 3, tiempo: 30, descanso: 45, icono: "✌️" },
+          { nombre: "Mountain climbers lentos", descripcion: "En plancha, lleva rodillas al pecho sin prisa. Siente el core.", zona: "Core y cardio", series: 3, tiempo: 40, descanso: 45, icono: "⛰️" },
+          { nombre: "Enfriamiento + estiramiento", descripcion: "Estira abdomen, oblicuos y espalda baja.", zona: "Core", series: 1, tiempo: 300, descanso: 0, icono: "❄️" },
+          { nombre: "Meditación de logro", descripcion: "Respira y reconoce lo que lograste esta semana.", zona: "Mente", series: 1, tiempo: 300, descanso: 0, icono: "🧠" }
         ]
       },
       domingo: {
-        nombre: "Domingo", emoji: "⬜", enfoque: "Descanso activo", duracion: 30,
-        explicacion: "Hoy toca recuperar. El descanso también entrena. Sal a caminar suave, respira, escribe cómo te fue en la semana y prepárate para la siguiente. Tu cuerpo crece cuando descansas.",
+        nombre: "Domingo", emoji: "💤", enfoque: "Descanso total", duracion: 20,
+        explicacion: "Hoy NO se entrena. El descanso es parte del plan. Tus músculos crecen cuando descansas, no cuando entrenas. Aprovecha para dormir bien, comer rico y hacer algo que te guste. Si quieres, camina suave y respira, pero nada más.",
         ejercicios: [
-          { nombre: "Caminata suave", descripcion: "15-20 min a paso tranquilo. Oxigena el cuerpo.", zona: "Cardio suave", series: 1, tiempo: 1200, descanso: 0, icono: "🚶" },
+          { nombre: "Caminata suave", descripcion: "15 min a paso tranquilo. Solo para oxigenar el cuerpo.", zona: "Cardio suave", series: 1, tiempo: 900, descanso: 0, icono: "🚶" },
           { nombre: "Respiración consciente", descripcion: "Inhala 4s, exhala 6s. 10 ciclos.", zona: "Mente", series: 1, tiempo: 300, descanso: 0, icono: "🌬️" },
-          { nombre: "Journaling", descripcion: "Escribe cómo te sentiste esta semana y tus metas.", zona: "Mente", series: 1, tiempo: 300, descanso: 0, icono: "📓" },
-          { nombre: "Meditación final", descripcion: "Relajación total, agradece por tu cuerpo.", zona: "Mente", series: 1, tiempo: 300, descanso: 0, icono: "🧠" }
+          { nombre: "Estiramiento suave", descripcion: "Estira todo el cuerpo con calma. Sin forzar.", zona: "Todo el cuerpo", series: 1, tiempo: 300, descanso: 0, icono: "🧘" },
+          { nombre: "Meditación de descanso", descripcion: "Cierra los ojos, respira y agradece la semana.", zona: "Mente", series: 1, tiempo: 300, descanso: 0, icono: "🧠" }
         ]
       }
     };
@@ -827,10 +784,10 @@
     // 2. ESTADO Y PERSISTENCIA
     // ============================================================
     let usuario = {
-      nombre: localStorage.getItem('fuerza14_nombre') || '',
-      edad: localStorage.getItem('fuerza14_edad') || '',
-      peso: localStorage.getItem('fuerza14_peso') || '',
-      altura: localStorage.getItem('fuerza14_altura') || ''
+      nombre: localStorage.getItem('rutina6_nombre') || '',
+      edad: localStorage.getItem('rutina6_edad') || '',
+      peso: localStorage.getItem('rutina6_peso') || '',
+      altura: localStorage.getItem('rutina6_altura') || ''
     };
 
     let estado = {
@@ -839,32 +796,28 @@
       timerInterval: null,
       tiempoRestante: 0,
       pausado: false,
-      completados: JSON.parse(localStorage.getItem('fuerza14_completados') || '{}'),
-      tema: localStorage.getItem('fuerza14_tema') || 'light'
+      completados: JSON.parse(localStorage.getItem('rutina6_completados') || '{}'),
+      tema: localStorage.getItem('rutina6_tema') || 'light'
     };
 
     // ============================================================
     // 3. INICIALIZACIÓN
     // ============================================================
     document.addEventListener('DOMContentLoaded', () => {
-      // Aplicar tema
       if (estado.tema === 'dark') {
         document.body.classList.add('dark');
         document.getElementById('themeIcon').className = 'fas fa-sun';
         document.getElementById('themeText').textContent = 'Modo claro';
       }
 
-      // Si ya hay datos guardados, saltar registro
       if (usuario.nombre && usuario.edad && usuario.peso && usuario.altura) {
         iniciarApp();
       } else {
         document.getElementById('welcomeScreen').classList.remove('hidden');
       }
 
-      // Botón de comenzar registro
       document.getElementById('btnComenzar').addEventListener('click', registrarUsuario);
 
-      // Enter en inputs
       ['inputNombre', 'inputEdad', 'inputPeso', 'inputAltura'].forEach(id => {
         document.getElementById(id).addEventListener('keypress', (e) => {
           if (e.key === 'Enter') registrarUsuario();
@@ -897,10 +850,10 @@
       }
 
       usuario = { nombre, edad, peso, altura };
-      localStorage.setItem('fuerza14_nombre', nombre);
-      localStorage.setItem('fuerza14_edad', edad);
-      localStorage.setItem('fuerza14_peso', peso);
-      localStorage.setItem('fuerza14_altura', altura);
+      localStorage.setItem('rutina6_nombre', nombre);
+      localStorage.setItem('rutina6_edad', edad);
+      localStorage.setItem('rutina6_peso', peso);
+      localStorage.setItem('rutina6_altura', altura);
 
       iniciarApp();
     }
@@ -909,13 +862,11 @@
       document.getElementById('welcomeScreen').classList.add('hidden');
       document.getElementById('appContainer').classList.remove('hidden');
 
-      // Detectar día actual
       const hoy = new Date();
       const diaSemana = hoy.getDay();
       const mapaDias = { 0: "domingo", 1: "lunes", 2: "martes", 3: "miercoles", 4: "jueves", 5: "viernes", 6: "sabado" };
       estado.diaActual = mapaDias[diaSemana];
 
-      // Mostrar nombre en el chip
       document.getElementById('userChipName').textContent = usuario.nombre;
 
       actualizarFecha();
@@ -932,9 +883,8 @@
       const hoy = new Date();
       const hora = hoy.getHours();
       let momento = "días";
-      if (hora < 12) momento = "días";
-      else if (hora < 19) momento = "tardes";
-      else momento = "noches";
+      if (hora >= 12 && hora < 19) momento = "tardes";
+      else if (hora >= 19) momento = "noches";
 
       const data = rutina[estado.diaActual];
       const titulo = document.getElementById('greetingTitle');
@@ -942,7 +892,6 @@
 
       titulo.textContent = `¡Buenas ${momento}, ${usuario.nombre}! 👋`;
 
-      // Calcular IMC
       const peso = parseFloat(usuario.peso);
       const alturaM = parseFloat(usuario.altura) / 100;
       const imc = (peso / (alturaM * alturaM)).toFixed(1);
@@ -995,8 +944,8 @@
 
     function obtenerColorDia(dia) {
       const colores = {
-        lunes: "#3b82f6", martes: "#22c55e", miercoles: "#eab308",
-        jueves: "#f97316", viernes: "#ef4444", sabado: "#a855f7", domingo: "#94a3b8"
+        lunes: "#8b5cf6", martes: "#ec4899", miercoles: "#06b6d4",
+        jueves: "#f59e0b", viernes: "#ef4444", sabado: "#22c55e", domingo: "#94a3b8"
       };
       return colores[dia] || "#94a3b8";
     }
@@ -1011,7 +960,6 @@
       document.getElementById('routineDayTitle').textContent = `${data.emoji} ${data.nombre}`;
       document.getElementById('routineFocus').textContent = data.enfoque;
 
-      // Explicación personalizada del bloque
       const explicacion = document.getElementById('blockExplanation');
       explicacion.innerHTML = `
         <strong>${usuario.nombre}, esto es lo que vas a hacer hoy:</strong> ${data.explicacion}
@@ -1077,7 +1025,6 @@
       document.getElementById('timerDisplay').classList.add('running');
       document.getElementById('pauseBtn').innerHTML = '<i class="fas fa-pause"></i> Pausar';
 
-      // Explicación personalizada en el timer
       document.getElementById('timerExplain').innerHTML = `
         ${usuario.nombre}, concéntrate en <strong>${ejercicio.zona.toLowerCase()}</strong>.
         ${ejercicio.descripcion} Respira profundo y mantén el ritmo.
@@ -1141,17 +1088,17 @@
       if (estado.ejercicioActual) {
         const { dia } = estado.ejercicioActual;
         estado.completados[dia] = true;
-        localStorage.setItem('fuerza14_completados', JSON.stringify(estado.completados));
-        localStorage.setItem('fuerza14_fecha', new Date().toLocaleDateString('es-ES'));
+        localStorage.setItem('rutina6_completados', JSON.stringify(estado.completados));
+        localStorage.setItem('rutina6_fecha', new Date().toLocaleDateString('es-ES'));
         generarNavegacion();
         actualizarProgreso();
 
-        // Mensaje motivacional personalizado
         const mensajes = [
           `¡Bien hecho, ${usuario.nombre}! Cada repetición te acerca a tu mejor versión.`,
           `¡Excelente, ${usuario.nombre}! Tu constancia es tu superpoder.`,
           `¡Gran trabajo, ${usuario.nombre}! Mañana será aún mejor.`,
-          `¡Así se hace, ${usuario.nombre}! Tu cuerpo te lo agradecerá.`
+          `¡Así se hace, ${usuario.nombre}! Tu cuerpo te lo agradecerá.`,
+          `¡Increíble, ${usuario.nombre}! Hoy ganaste otra batalla.`
         ];
         const msg = mensajes[Math.floor(Math.random() * mensajes.length)];
         document.getElementById('greetingText').innerHTML = `<strong>${msg}</strong> Has completado el día ${rutina[dia].nombre}.`;
@@ -1179,12 +1126,11 @@
       document.body.classList.toggle('dark');
       const esOscuro = document.body.classList.contains('dark');
       estado.tema = esOscuro ? 'dark' : 'light';
-      localStorage.setItem('fuerza14_tema', estado.tema);
+      localStorage.setItem('rutina6_tema', estado.tema);
       document.getElementById('themeIcon').className = esOscuro ? 'fas fa-sun' : 'fas fa-moon';
       document.getElementById('themeText').textContent = esOscuro ? 'Modo claro' : 'Modo oscuro';
     }
 
-    // Exponer funciones globales
     window.iniciarEjercicio = iniciarEjercicio;
     window.repetirEjercicioDirecto = repetirEjercicioDirecto;
     window.repetirEjercicio = repetirEjercicio;
