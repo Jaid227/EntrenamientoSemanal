@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>Modo entrenamiento · Personalizable</title>
+  <title>Modo Entrenamiento · Personalizable</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
@@ -289,7 +289,7 @@
     .day-btn.completed { border-left: 4px solid var(--success); }
     .day-btn:hover:not(.active) { background: var(--border); }
 
-    /* ===== PANEL DE CONTROL (editar / niveles) ===== */
+    /* ===== PANEL DE CONTROL ===== */
     .control-panel {
       display: flex;
       gap: 0.6rem;
@@ -408,6 +408,130 @@
       border: 1px solid var(--border);
       text-transform: uppercase;
       letter-spacing: 0.02em;
+    }
+
+    /* ===== IMAGEN DEL EJERCICIO ===== */
+    .exercise-image-wrapper {
+      margin-top: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .exercise-thumb {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 2px solid var(--border);
+      cursor: zoom-in;
+      transition: all var(--transition);
+      background: var(--bg);
+    }
+
+    .exercise-thumb:hover {
+      border-color: var(--primary);
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(20, 184, 166, 0.25);
+    }
+
+    .img-actions {
+      display: flex;
+      gap: 0.35rem;
+      flex-wrap: wrap;
+    }
+
+    .img-btn {
+      padding: 0.35rem 0.7rem;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      font-size: 0.72rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: all var(--transition);
+      font-family: inherit;
+    }
+
+    .img-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
+    .img-btn.danger:hover { background: var(--danger); border-color: var(--danger); }
+
+    .img-input-hidden { display: none; }
+
+    /* ===== LIGHTBOX (imagen en pantalla completa) ===== */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.92);
+      z-index: 3000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      cursor: zoom-out;
+      animation: fadeIn 0.2s ease;
+    }
+
+    .lightbox.active { display: flex; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .lightbox img {
+      max-width: 95vw;
+      max-height: 95vh;
+      object-fit: contain;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      cursor: zoom-out;
+      animation: zoomIn 0.25s ease;
+    }
+
+    @keyframes zoomIn {
+      from { transform: scale(0.85); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all var(--transition);
+    }
+
+    .lightbox-close:hover { background: rgba(255, 255, 255, 0.3); }
+
+    .lightbox-caption {
+      position: absolute;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
+      font-size: 0.9rem;
+      font-weight: 500;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 0.5rem 1rem;
+      border-radius: 40px;
+      max-width: 90vw;
+      text-align: center;
     }
 
     .exercise-action { display: flex; gap: 0.4rem; flex-wrap: wrap; justify-content: flex-end; }
@@ -644,6 +768,10 @@
     <div class="welcome-card">
       <h1><i class="fas fa-sliders-h"></i> Mi Rutina</h1>
       <p>
+
+        
+      </p>
+      <p>
         Bienvenido a tu plan 100% personalizable. Antes de empezar, cuéntame sobre ti.
         Tus datos se guardan solo en tu dispositivo.
       </p>
@@ -839,9 +967,20 @@
     </div>
   </div>
 
+  <!-- ============================================ -->
+  <!-- LIGHTBOX (imagen en pantalla completa)       -->
+  <!-- ============================================ -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Cerrar imagen">
+      <i class="fas fa-times"></i>
+    </button>
+    <img id="lightboxImg" src="" alt="Imagen en pantalla completa">
+    <div class="lightbox-caption" id="lightboxCaption"></div>
+  </div>
+
   <script>
     // ============================================================
-    // 1. BASE DE EJERCICIOS DISPONIBLES (catálogo general)
+    // 1. CATÁLOGO DE EJERCICIOS
     // ============================================================
     const catalogoEjercicios = {
       pierna: [
@@ -890,7 +1029,7 @@
       principiante: {
         nombre: "🌱 Principiante",
         descripcion: "Ideal para empezar. Menos volumen y tiempos más cortos.",
-        tiempoBase: 0.7, // multiplicador
+        tiempoBase: 0.7,
         seriesBase: -1,
         dias: {
           lunes: { enfoque: "Pierna", ejercicios: ["Sentadillas", "Puente de glúteo", "Elevación de gemelos"] },
@@ -950,15 +1089,14 @@
     };
 
     // ============================================================
-    // 3. UTILIDADES DE AUDIO (efectos y alarma)
+    // 3. AUDIO
     // ============================================================
     const Audio = {
       ctx: null,
       init() {
         if (!this.ctx) {
-          try {
-            this.ctx = new (window.AudioContext || window.webkitAudioContext)();
-          } catch (e) { this.ctx = null; }
+          try { this.ctx = new (window.AudioContext || window.webkitAudioContext)(); }
+          catch (e) { this.ctx = null; }
         }
       },
       beep(freq = 800, duracion = 0.15, volumen = 0.15) {
@@ -967,10 +1105,8 @@
         try {
           const osc = this.ctx.createOscillator();
           const gain = this.ctx.createGain();
-          osc.connect(gain);
-          gain.connect(this.ctx.destination);
-          osc.frequency.value = freq;
-          gain.gain.value = volumen;
+          osc.connect(gain); gain.connect(this.ctx.destination);
+          osc.frequency.value = freq; gain.gain.value = volumen;
           osc.start();
           setTimeout(() => { osc.stop(); }, duracion * 1000);
         } catch (e) {}
@@ -979,16 +1115,11 @@
       start() { this.beep(880, 0.12, 0.15); setTimeout(() => this.beep(1200, 0.12, 0.15), 130); },
       pause() { this.beep(400, 0.15, 0.12); },
       finish() { this.beep(1200, 0.15, 0.18); setTimeout(() => this.beep(1400, 0.2, 0.18), 160); },
-      alarma() {
-        // Alarma de fin de tiempo: 3 pitidos agudos
-        for (let i = 0; i < 3; i++) {
-          setTimeout(() => this.beep(1500, 0.25, 0.25), i * 350);
-        }
-      }
+      alarma() { for (let i = 0; i < 3; i++) setTimeout(() => this.beep(1500, 0.25, 0.25), i * 350); }
     };
 
     // ============================================================
-    // 4. ESTADO GLOBAL Y PERSISTENCIA
+    // 4. ESTADO
     // ============================================================
     let usuario = {
       nombre: localStorage.getItem('miRutina_nombre') || '',
@@ -998,8 +1129,8 @@
       nivel: localStorage.getItem('miRutina_nivel') || 'intermedio'
     };
 
-    // Rutina personalizada guardada (si existe). Si no, se genera desde el nivel.
     let rutinaSemana = JSON.parse(localStorage.getItem('miRutina_semana') || 'null');
+    let imagenesEjercicios = JSON.parse(localStorage.getItem('miRutina_imagenes') || '{}');
 
     let estado = {
       diaActual: "lunes",
@@ -1010,14 +1141,119 @@
       completados: JSON.parse(localStorage.getItem('miRutina_completados') || '{}'),
       tema: localStorage.getItem('miRutina_tema') || 'light',
       modoEdicion: false,
-      editandoIndex: null // null = nuevo, número = editando existente
+      editandoIndex: null
     };
 
     const diasSemana = ["lunes", "martes", "miercoles", "jueves", "viernes", "sabado", "domingo"];
     const nombresDias = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
 
     // ============================================================
-    // 5. GENERACIÓN DE RUTINA DESDE NIVEL
+    // 5. UTILIDADES DE IMÁGENES (localStorage)
+    // ============================================================
+    // Clave única por día + índice del ejercicio
+    function claveImagen(dia, index) {
+      return `${dia}__${index}`;
+    }
+
+    function guardarImagen(dia, index, dataUrl) {
+      const key = claveImagen(dia, index);
+      imagenesEjercicios[key] = dataUrl;
+      try {
+        localStorage.setItem('miRutina_imagenes', JSON.stringify(imagenesEjercicios));
+      } catch (e) {
+        alert('⚠️ No se pudo guardar la imagen. Es posible que el almacenamiento esté lleno. Intenta con una imagen más pequeña o elimina algunas.');
+      }
+    }
+
+    function obtenerImagen(dia, index) {
+      return imagenesEjercicios[claveImagen(dia, index)] || null;
+    }
+
+    function eliminarImagen(dia, index) {
+      const key = claveImagen(dia, index);
+      delete imagenesEjercicios[key];
+      localStorage.setItem('miRutina_imagenes', JSON.stringify(imagenesEjercicios));
+    }
+
+    // Cuando se elimina un ejercicio, hay que reindexar las imágenes
+    function reindexarImagenes(dia, indexEliminado) {
+      const nuevas = {};
+      Object.keys(imagenesEjercicios).forEach(key => {
+        const [d, i] = key.split('__');
+        const idx = parseInt(i);
+        if (d === dia && idx === indexEliminado) {
+          // Se descarta (era la del ejercicio eliminado)
+        } else if (d === dia && idx > indexEliminado) {
+          nuevas[`${d}__${idx - 1}`] = imagenesEjercicios[key];
+        } else {
+          nuevas[key] = imagenesEjercicios[key];
+        }
+      });
+      imagenesEjercicios = nuevas;
+      localStorage.setItem('miRutina_imagenes', JSON.stringify(imagenesEjercicios));
+    }
+
+    // Manejar subida de archivo
+    function subirImagen(dia, index, inputEl) {
+      const file = inputEl.files[0];
+      if (!file) return;
+      if (!file.type.startsWith('image/')) {
+        alert('Por favor, elige un archivo de imagen.');
+        return;
+      }
+      // Comprimir un poco si es muy grande
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          // Redimensionar a max 800px de ancho para no llenar localStorage
+          const maxW = 800;
+          let w = img.width, h = img.height;
+          if (w > maxW) {
+            h = Math.round(h * (maxW / w));
+            w = maxW;
+          }
+          const canvas = document.createElement('canvas');
+          canvas.width = w;
+          canvas.height = h;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, w, h);
+          const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
+          guardarImagen(dia, index, dataUrl);
+          Audio.click();
+          cargarRutina(dia);
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+      inputEl.value = ''; // reset
+    }
+
+    function borrarImagen(dia, index) {
+      if (!confirm('¿Eliminar la imagen de este ejercicio?')) return;
+      eliminarImagen(dia, index);
+      Audio.pause();
+      cargarRutina(dia);
+    }
+
+    // ============================================================
+    // 6. LIGHTBOX (pantalla completa)
+    // ============================================================
+    function abrirLightbox(src, caption) {
+      const lb = document.getElementById('lightbox');
+      document.getElementById('lightboxImg').src = src;
+      document.getElementById('lightboxCaption').textContent = caption || '';
+      lb.classList.add('active');
+      Audio.click();
+    }
+
+    function cerrarLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+      document.getElementById('lightboxImg').src = '';
+    }
+
+    // ============================================================
+    // 7. GENERAR RUTINA DESDE NIVEL
     // ============================================================
     function generarRutinaDesdeNivel(nivelKey) {
       const nivel = niveles[nivelKey];
@@ -1028,47 +1264,36 @@
         const ejercicios = [];
 
         if (config.ejercicios.length > 0) {
-          // Calentamiento siempre primero
           ejercicios.push({
             nombre: "Calentamiento articular",
             descripcion: "Círculos de cuello, hombros, muñecas, cadera y tobillos.",
             zona: "Articulaciones", series: 1, tiempo: 300, descanso: 0, icono: "🔄"
           });
 
-          // Ejercicios del nivel
           config.ejercicios.forEach(nombreEj => {
-            // Buscar en el catálogo
             let encontrado = null;
             Object.values(catalogoEjercicios).forEach(lista => {
               lista.forEach(ej => { if (ej.nombre === nombreEj) encontrado = ej; });
             });
             if (encontrado) {
-              // Aplicar multiplicadores del nivel
               const seriesAjustadas = Math.max(1, encontrado.series + nivel.seriesBase);
               const tiempoAjustado = Math.round(encontrado.tiempo * nivel.tiempoBase);
-              ejercicios.push({
-                ...encontrado,
-                series: seriesAjustadas,
-                tiempo: tiempoAjustado
-              });
+              ejercicios.push({ ...encontrado, series: seriesAjustadas, tiempo: tiempoAjustado });
             }
           });
 
-          // Enfriamiento
           ejercicios.push({
             nombre: "Enfriamiento + estiramiento",
             descripcion: "Estira los músculos trabajados. Respira profundo.",
             zona: "Todo el cuerpo", series: 1, tiempo: 300, descanso: 0, icono: "❄️"
           });
 
-          // Meditación
           ejercicios.push({
             nombre: "Meditación final",
             descripcion: "Respiración consciente. Relaja cuerpo y mente.",
             zona: "Mente", series: 1, tiempo: 300, descanso: 0, icono: "🧠"
           });
         } else {
-          // Día de descanso
           ejercicios.push({
             nombre: "Descanso total",
             descripcion: "Hoy no se entrena. El descanso es parte del plan.",
@@ -1108,7 +1333,7 @@
     }
 
     // ============================================================
-    // 6. INICIALIZACIÓN
+    // 8. INICIALIZACIÓN
     // ============================================================
     document.addEventListener('DOMContentLoaded', () => {
       if (estado.tema === 'dark') {
@@ -1143,10 +1368,17 @@
 
       document.getElementById('modalCancel').addEventListener('click', cerrarModal);
       document.getElementById('modalConfirm').addEventListener('click', ejecutarModal);
+
+      // Lightbox: cerrar al hacer click en cualquier parte
+      document.getElementById('lightbox').addEventListener('click', cerrarLightbox);
+      // Cerrar con ESC también
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') cerrarLightbox();
+      });
     });
 
     // ============================================================
-    // 7. REGISTRO
+    // 9. REGISTRO
     // ============================================================
     function registrarUsuario() {
       const nombre = document.getElementById('inputNombre').value.trim();
@@ -1171,7 +1403,6 @@
       localStorage.setItem('miRutina_altura', altura);
       localStorage.setItem('miRutina_nivel', nivel);
 
-      // Generar rutina automática según nivel
       rutinaSemana = generarRutinaDesdeNivel(nivel);
       localStorage.setItem('miRutina_semana', JSON.stringify(rutinaSemana));
 
@@ -1182,7 +1413,6 @@
       document.getElementById('welcomeScreen').classList.add('hidden');
       document.getElementById('appContainer').classList.remove('hidden');
 
-      // Si no hay rutina guardada, generarla
       if (!rutinaSemana) {
         rutinaSemana = generarRutinaDesdeNivel(usuario.nivel);
         localStorage.setItem('miRutina_semana', JSON.stringify(rutinaSemana));
@@ -1203,7 +1433,7 @@
     }
 
     // ============================================================
-    // 8. SALUDO Y FECHA
+    // 10. SALUDO Y FECHA
     // ============================================================
     function actualizarSaludo() {
       const hora = new Date().getHours();
@@ -1212,16 +1442,13 @@
       else if (hora >= 19) momento = "noches";
 
       const data = rutinaSemana[estado.diaActual];
-      const titulo = document.getElementById('greetingTitle');
-      const texto = document.getElementById('greetingText');
-
-      titulo.textContent = `¡Buenas ${momento}, ${usuario.nombre}! 👋`;
+      document.getElementById('greetingTitle').textContent = `¡Buenas ${momento}, ${usuario.nombre}! 👋`;
 
       const peso = parseFloat(usuario.peso);
       const alturaM = parseFloat(usuario.altura) / 100;
       const imc = (peso / (alturaM * alturaM)).toFixed(1);
 
-      texto.innerHTML = `
+      document.getElementById('greetingText').innerHTML = `
         Tienes <strong>${usuario.edad} años</strong>, mides <strong>${usuario.altura} cm</strong> y pesas <strong>${usuario.peso} kg</strong> (IMC: ${imc}).
         Nivel actual: <strong>${niveles[usuario.nivel].nombre}</strong>.
         Hoy es <strong>${data.nombre}</strong> y te toca: <strong>${data.enfoque.toLowerCase()}</strong>.
@@ -1243,7 +1470,7 @@
     }
 
     // ============================================================
-    // 9. NAVEGACIÓN
+    // 11. NAVEGACIÓN
     // ============================================================
     function generarNavegacion() {
       const nav = document.getElementById('weekNav');
@@ -1277,7 +1504,7 @@
     }
 
     // ============================================================
-    // 10. CARGAR RUTINA
+    // 12. CARGAR RUTINA
     // ============================================================
     function cargarRutina(dia) {
       const data = rutinaSemana[dia];
@@ -1286,10 +1513,9 @@
       document.getElementById('routineDayTitle').textContent = `${data.emoji} ${data.nombre}`;
       document.getElementById('routineFocus').textContent = data.enfoque;
 
-      const explicacion = document.getElementById('blockExplanation');
-      explicacion.innerHTML = `
+      document.getElementById('blockExplanation').innerHTML = `
         <strong>${usuario.nombre}, esto es lo que vas a hacer hoy:</strong> ${data.explicacion}
-        ${estado.modoEdicion ? '<br><br><em>✏️ Estás en modo edición. Puedes agregar, modificar o eliminar ejercicios.</em>' : ''}
+        ${estado.modoEdicion ? '<br><br><em>✏️ Estás en modo edición. Puedes agregar, modificar, eliminar ejercicios y subir imágenes.</em>' : ''}
       `;
 
       const totalTiempo = data.ejercicios.reduce((s, e) => s + (e.tiempo * e.series + e.descanso * (e.series - 1)), 0);
@@ -1305,6 +1531,7 @@
       lista.innerHTML = '';
 
       data.ejercicios.forEach((ej, index) => {
+        const imgSrc = obtenerImagen(dia, index);
         const item = document.createElement('div');
         item.className = 'exercise-item' + (estado.modoEdicion ? ' editing' : '');
         item.innerHTML = `
@@ -1317,6 +1544,25 @@
               <span class="tag">${ej.series} series</span>
               <span class="tag">${formatearTiempo(ej.tiempo)}</span>
               ${ej.descanso > 0 ? `<span class="tag">descanso ${ej.descanso}s</span>` : ''}
+            </div>
+            <div class="exercise-image-wrapper" id="imgWrapper_${dia}_${index}">
+              ${imgSrc ? `
+                <img src="${imgSrc}" class="exercise-thumb" alt="${ej.nombre}"
+                     onclick="abrirLightbox('${imgSrc.replace(/'/g, "\\'")}', '${ej.nombre.replace(/'/g, "\\'")}')">
+              ` : ''}
+              <div class="img-actions">
+                <button class="img-btn" onclick="document.getElementById('fileInput_${dia}_${index}').click()">
+                  <i class="fas fa-camera"></i> ${imgSrc ? 'Cambiar' : 'Subir imagen'}
+                </button>
+                ${imgSrc ? `
+                  <button class="img-btn danger" onclick="borrarImagen('${dia}', ${index})">
+                    <i class="fas fa-trash"></i> Quitar
+                  </button>
+                ` : ''}
+              </div>
+              <input type="file" accept="image/*" class="img-input-hidden"
+                     id="fileInput_${dia}_${index}"
+                     onchange="subirImagen('${dia}', ${index}, this)">
             </div>
           </div>
           <div class="exercise-action">
@@ -1340,7 +1586,6 @@
         lista.appendChild(item);
       });
 
-      // Si está en modo edición, agregar botón "Agregar ejercicio"
       if (estado.modoEdicion) {
         const addBtn = document.createElement('button');
         addBtn.className = 'btn btn-primary';
@@ -1358,7 +1603,7 @@
     }
 
     // ============================================================
-    // 11. MODO EDICIÓN
+    // 13. MODO EDICIÓN
     // ============================================================
     function toggleEditMode() {
       Audio.click();
@@ -1428,16 +1673,13 @@
       const dia = estado.diaActual;
 
       if (estado.editandoIndex === null) {
-        // Agregar nuevo
         rutinaSemana[dia].ejercicios.push(nuevoEj);
         Audio.start();
       } else {
-        // Editar existente
         rutinaSemana[dia].ejercicios[estado.editandoIndex] = nuevoEj;
         Audio.beep(700, 0.12, 0.15);
       }
 
-      // Recalcular duración
       recalcularDuracion(dia);
       localStorage.setItem('miRutina_semana', JSON.stringify(rutinaSemana));
 
@@ -1454,9 +1696,15 @@
       Audio.pause();
       abrirModal(
         'Eliminar ejercicio',
-        `¿Seguro que quieres eliminar "<strong>${rutinaSemana[estado.diaActual].ejercicios[index].nombre}</strong>" de este día?`,
+        `¿Seguro que quieres eliminar "<strong>${rutinaSemana[estado.diaActual].ejercicios[index].nombre}</strong>" de este día?<br><br>
+         <em>Su imagen también se eliminará.</em>`,
         () => {
+          // Eliminar imagen asociada
+          eliminarImagen(estado.diaActual, index);
+          // Eliminar el ejercicio
           rutinaSemana[estado.diaActual].ejercicios.splice(index, 1);
+          // Reindexar imágenes posteriores
+          reindexarImagenes(estado.diaActual, index);
           recalcularDuracion(estado.diaActual);
           localStorage.setItem('miRutina_semana', JSON.stringify(rutinaSemana));
           cargarRutina(estado.diaActual);
@@ -1472,7 +1720,7 @@
     }
 
     // ============================================================
-    // 12. SELECTOR DE NIVELES
+    // 14. SELECTOR DE NIVELES
     // ============================================================
     function abrirSelectorNiveles() {
       Audio.click();
@@ -1506,13 +1754,15 @@
       abrirModal(
         'Confirmar cambio de nivel',
         `¿Seguro que quieres reemplazar toda tu semana con la rutina <strong>${nivel.nombre}</strong>?<br><br>
-        <em>Se perderán todas las personalizaciones que hayas hecho.</em>`,
+        <em>Se perderán todas las personalizaciones e imágenes que hayas subido.</em>`,
         () => {
           usuario.nivel = nivelKey;
           localStorage.setItem('miRutina_nivel', nivelKey);
           rutinaSemana = generarRutinaDesdeNivel(nivelKey);
           localStorage.setItem('miRutina_semana', JSON.stringify(rutinaSemana));
-          // Resetear completados porque es una semana nueva
+          // Limpiar imágenes porque cambian los índices
+          imagenesEjercicios = {};
+          localStorage.setItem('miRutina_imagenes', JSON.stringify({}));
           estado.completados = {};
           localStorage.setItem('miRutina_completados', JSON.stringify({}));
           cargarRutina(estado.diaActual);
@@ -1526,17 +1776,19 @@
     }
 
     // ============================================================
-    // 13. RESET TOTAL
+    // 15. RESET
     // ============================================================
     function confirmarReset() {
       Audio.click();
       abrirModal(
         'Restaurar semana',
         `Esto reemplazará todos los días con la rutina del nivel <strong>${niveles[usuario.nivel].nombre}</strong>.<br><br>
-        ¿Perderás tus personalizaciones. Continuar?`,
+        ¿Perderás tus personalizaciones e imágenes. Continuar?`,
         () => {
           rutinaSemana = generarRutinaDesdeNivel(usuario.nivel);
           localStorage.setItem('miRutina_semana', JSON.stringify(rutinaSemana));
+          imagenesEjercicios = {};
+          localStorage.setItem('miRutina_imagenes', JSON.stringify({}));
           cargarRutina(estado.diaActual);
           Audio.finish();
           cerrarModal();
@@ -1545,7 +1797,7 @@
     }
 
     // ============================================================
-    // 14. MODAL GENÉRICO
+    // 16. MODAL GENÉRICO
     // ============================================================
     let modalCallback = null;
 
@@ -1567,7 +1819,7 @@
     }
 
     // ============================================================
-    // 15. CRONÓMETRO CON AUDIO
+    // 17. CRONÓMETRO
     // ============================================================
     function iniciarEjercicio(dia, index) {
       const ejercicio = rutinaSemana[dia].ejercicios[index];
@@ -1668,7 +1920,7 @@
     }
 
     // ============================================================
-    // 16. TEMA
+    // 18. TEMA
     // ============================================================
     function toggleTema() {
       Audio.click();
@@ -1680,7 +1932,7 @@
       document.getElementById('themeText').textContent = esOscuro ? 'Modo claro' : 'Modo oscuro';
     }
 
-    // Exponer funciones globales
+    // Exponer globales
     window.iniciarEjercicio = iniciarEjercicio;
     window.repetirEjercicioDirecto = repetirEjercicioDirecto;
     window.repetirEjercicio = repetirEjercicio;
@@ -1689,6 +1941,10 @@
     window.editarEjercicio = editarEjercicio;
     window.eliminarEjercicio = eliminarEjercicio;
     window.seleccionarNivel = seleccionarNivel;
+    window.subirImagen = subirImagen;
+    window.borrarImagen = borrarImagen;
+    window.abrirLightbox = abrirLightbox;
+    window.cerrarLightbox = cerrarLightbox;
   </script>
 </body>
 </html>
